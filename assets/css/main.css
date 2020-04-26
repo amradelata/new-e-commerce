@@ -1,0 +1,108 @@
+body{
+  font-family: 'Roboto', sans-serif;
+  /* height: 200vh; */
+}
+.top{
+  margin-top: 100px
+}
+
+
+/* .container{
+  padding: 0 6em !important;
+} */
+h1 {
+    font-size: 3em;
+    text-transform: uppercase;
+    margin-bottom: 2em;
+}
+
+.subheading {
+    font-size: 1.5em;
+    margin-bottom: 2em;
+    text-transform: uppercase;
+    color: rgb(179, 179, 179);
+    font-weight: bold;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+
+  .page-enter-active {
+    animation: bounce-in .8s;
+  }
+  .page-leave-active {
+    animation: bounce-out .5s;
+  }
+  @keyframes bounce-in {
+    0% { transform: scale(.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes bounce-out {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(.9); opacity: 0; }
+  }
+  .productNavPhone,
+  .total-phone,
+  .Phone-item{
+    display: none;
+  }
+
+@media (max-width: 480px){
+    .skils{
+    text-align: center;
+    }
+    .nav,
+    .productNav,
+    .dickTop-item,
+    .order
+    {
+    display: none;
+    }
+    .productNavPhone,
+    .Phone-item,
+    .total-phone{
+    display: block;
+    }
+    .imgcart{
+    width: 100% !important
+    }
+
+    .next-step{
+      left: 50% !important;
+      top: 100% !important;
+      transform: translate(-50%, 50%) !important;
+      margin: 0 !important;
+      /* display: none; */
+    }
+    .checkout{
+      margin-top: 50vh !important;
+      overflow: inherit !important;
+      background: #fff !important;
+      box-shadow: none !important;
+      text-align: center !important;
+    }
+   .checkout{
+     width: 117% !important;
+    }
+    .expect
+    {      
+      position: absolute !important;
+      top: 100% !important;
+
+
+    }
+    .thankYouBtn{
+      position: absolute !important;
+      top: 120% !important;
+      left: 10%;
+
+     }
+
+    .thankYouImg {
+        margin: 0 !important;
+        margin-top: 100px !important
+      }
+  }
