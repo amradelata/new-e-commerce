@@ -16,7 +16,7 @@
                 v-model="searchVale"
                 @keyup.enter="searchRout"
               />
-              <li>
+              <li class="active">
                 <nuxt-link to="/about">About</nuxt-link>
               </li>
               <li>
@@ -57,17 +57,18 @@
               @keyup.enter="searchRout"
             />
           </li>
-          <li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/products">products</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/about">About</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
             <nuxt-link to="/cart">
+              cart
               <v-icon>mdi-cart</v-icon>
               <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p>
             </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/about">About</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/products">products</nuxt-link>
           </li>
         </ul>
       </div>
@@ -100,6 +101,7 @@ export default {
       this.$refs["phoneNav"].classList.toggle("change");
       this.$refs["changenavBody"].classList.toggle("changenavBody");
     },
+
     //pass this.searchVale to link and in search component
     searchRout() {
       this.$router.push("/search?test=" + this.searchVale);

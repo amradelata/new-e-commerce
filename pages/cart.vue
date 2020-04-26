@@ -1,30 +1,43 @@
 <template>
   <div>
-    <div class="dadCrds" v-for="(item , index) in this.cartItems" :key="item.id">
-      <div class="supCard">
-        <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+    <div v-if="$store.state.products.cart.length > 0">
+      <div class="dadCrds" v-for="(item , index) in this.cartItems" :key="item.id">
+        <div class="supCard">
+          <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+        </div>
+        <div class="supCard">
+          <span>{{item.name}}</span>
+          <span>{{item.price}}$</span>
+          <span>{{item.quantity+" : qty"}}</span>
+          <nuxt-link :to="'/products/' + item.id">
+            <i class="fas fa-info">poen product</i>
+          </nuxt-link>
+        </div>
+        <div class="supCard">
+          <v-btn @click="deletItemfromcart(index)">delet</v-btn>
+          <v-btn @click="addToqty(index)">+1</v-btn>
+          <v-btn @click="remvQty(index)">-1</v-btn>
+        </div>
       </div>
-      <div class="supCard">
-        <span>{{item.name}}</span>
-        <span>{{item.price}}$</span>
-        <span>{{item.quantity+" : qty"}}</span>
-        <nuxt-link :to="'/products/' + item.id">
-          <i class="fas fa-info">poen product</i>
-        </nuxt-link>
-      </div>
-      <div class="supCard">
-        <v-btn @click="deletItemfromcart(index)">delet</v-btn>
-        <v-btn @click="addToqty(index)">+1</v-btn>
-        <v-btn @click="remvQty(index)">-1</v-btn>
+
+      <div class="totalPrice">
+        <span style="display:inline">Total price:</span>
+        <h2 style="color:#006fcc; display:inline">{{this.totalPrice}} $</h2>
+        <!-- <span style="display:inline">Total Items:</span>
+        <h2 style="color:#006fcc; display:inline">{{this.totalItems}}</h2>-->
+        <v-btn class="cartbtn">Proceed to checkout</v-btn>
       </div>
     </div>
-
-    <div class="totalPrice">
-      <span style="display:inline">Total price:</span>
-      <h2 style="color:#006fcc; display:inline">{{this.totalPrice}} $</h2>
-      <!-- <span style="display:inline">Total Items:</span>
-      <h2 style="color:#006fcc; display:inline">{{this.totalItems}}</h2>-->
-      <v-btn class="cartbtn">Proceed to checkout</v-btn>
+    <!-- if the cart is empty -->
+    <div v-else class="is-boxed is-right">
+      <div class="content">
+        <img
+          class="empyimg"
+          src="https://static05.jockeyindia.com/uploads/images/img-no-cartitems.png"
+          alt
+        />
+        <span>your cart is empty!</span>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +78,21 @@ export default {
 </script>
 
 <style scoped>
+.content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.content span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 300%);
+  width: 100%;
+  text-align: center;
+}
+
 /* how to center text in html vertically horizontally with display flex */
 .dadCrds,
 .totalPrice {
@@ -103,6 +131,9 @@ export default {
     margin: 0;
     display: block;
     margin: 20px 0;
+  }
+  .content .empyimg {
+    width: 100vw;
   }
 }
 </style>

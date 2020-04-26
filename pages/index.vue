@@ -41,9 +41,8 @@
               <v-flex xs12 sm6 offset-sm3>
                 <div>
                   <img
-                    class="size"
+                    class="size margin"
                     src="https://s3.amazonaws.com/coursetro/posts/144-full.png"
-                    style="margin-top: 50px"
                   />
                 </div>
               </v-flex>
@@ -57,7 +56,7 @@
               <v-flex xs12 sm6 offset-sm3>
                 <div>
                   <img
-                    class="size"
+                    class="size margin"
                     src="https://styles.redditmedia.com/t5_3nu8v/styles/communityIcon_zuqnf4r5ml111.png"
                     alt
                   />
@@ -134,6 +133,7 @@ h4 {
 }
 .skils {
   margin: 100px 0;
+  text-align: center;
 }
 .black {
   color: #000;
@@ -142,9 +142,7 @@ h4 {
   width: 150px;
   margin: auto;
 }
-/* .spanCenter{
-    text-align: center !important;
-    margin: auto !important;
-    justify-content: center !important;
-} */
+.margin {
+  margin-top: 50px;
+}
 </style>

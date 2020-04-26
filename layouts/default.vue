@@ -1,6 +1,7 @@
 <template>
   <v-app dark>
     <myNav />
+    <mypopup />
     <productNav />
     <div style="margin-top: 130px">
       <nuxt />
@@ -18,11 +19,13 @@
 
 <script>
 import myNav from "~/components/myNav.vue";
+import mypopup from "~/components/mypopup.vue";
 import productNav from "~/components/productNav.vue";
 export default {
   components: {
     myNav,
-    productNav
+    productNav,
+    mypopup
   },
   data() {
     return {
