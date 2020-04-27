@@ -140,6 +140,7 @@ li a {
 .right0 {
   position: absolute;
   right: 0;
+  /* margin-top: 5px; */
 }
 .input {
   border: 1px solid #ddd;
@@ -232,6 +233,15 @@ li a {
   display: none;
 }
 
+/* taplet */
+@media screen and (min-width: 769px) and (max-width: 1215px) {
+  .navPhone {
+    display: block;
+  }
+  .navDiskTop {
+    display: none;
+  }
+}
 @media screen and (max-width: 768px) {
   .navPhone {
     display: block;

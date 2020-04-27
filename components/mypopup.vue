@@ -43,9 +43,14 @@ export default {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .mypopup img {
-  width: 200px;
+  width: 350px;
 }
 .mypopup .v-btn {
   margin: 10px 0;
+}
+@media screen and (max-width: 768px) {
+  .mypopup img {
+    width: 100%;
+  }
 }
 </style>

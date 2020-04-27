@@ -25,7 +25,7 @@
         <h2 style="color:#006fcc; display:inline">{{this.totalPrice}} $</h2>
         <!-- <span style="display:inline">Total Items:</span>
         <h2 style="color:#006fcc; display:inline">{{this.totalItems}}</h2>-->
-        <v-btn class="cartbtn">Proceed to checkout</v-btn>
+        <v-btn class="cartbtn" @click="toPayment">Proceed to checkout</v-btn>
       </div>
     </div>
     <!-- if the cart is empty -->
@@ -66,6 +66,13 @@ export default {
     remvQty(index) {
       this.$store.commit("products/remvQty", index);
       this.$store.commit("products/totalPrice");
+    },
+    toPayment() {
+      if (localStorage.getItem("status") != null) {
+        this.$router.replace("/payment");
+      } else {
+        this.$router.replace("/signIn");
+      }
     }
   },
   mounted() {

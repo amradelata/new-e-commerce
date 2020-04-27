@@ -1,46 +1,48 @@
 <template>
-  <div>
-    <img
-      class="thankYouImg"
-      src="https://cdn.dribbble.com/users/637635/screenshots/6065726/800_600_2.gif"
-      alt
-    />
-
-    <nuxt-link to="/products">
-      <button class="thankYouBtn">back to shopping</button>
-    </nuxt-link>
-    <p class="expect">Expect delivery from 2 to 3 days work</p>
+  <div class="thankYou">
+    <div class="thankYoucontent">
+      <img
+        class="thankYouImg"
+        src="https://cdn.dribbble.com/users/637635/screenshots/6065726/800_600_2.gif"
+        alt
+      />
+      <nuxt-link to="/products">
+        <v-btn class="thankYouBtn">back to shopping</v-btn>
+      </nuxt-link>
+      <p class="expect">Expect delivery from 2 to 3 days work</p>
+    </div>
   </div>
 </template>
 
 
-
 <style scoped>
-.thankYouImg {
-  margin: 100px;
-  height: 60vh;
-}
 .thankYou {
   position: relative;
+  height: 100vh;
 }
-button {
+.thankYoucontent {
+  text-align: center;
   position: absolute;
-  top: 30%;
-  right: 20%;
-  color: #3498db;
-  box-shadow: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid #3498db;
+  margin-top: 360px;
+  /* top: 50%; */
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-button:hover {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+.thankYoucontent img {
+  width: 100%;
+  /* height: 100vh; */
 }
-.expect {
-  position: absolute;
-  top: 40%;
-  right: 15%;
-  /* text-align: right; */
+.thankYouBtn {
+  margin: 35px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .thankYoucontent {
+    margin-top: 200px;
+  }
+  .thankYoucontent img {
+    width: 100vw;
+  }
 }
 </style>
+
