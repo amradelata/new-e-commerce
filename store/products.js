@@ -56,7 +56,6 @@ totalPrice(state){
 },
 deletItemfromcart(state, index){
   state.cart.splice(index, 1);
-  // state.cartCount = state.cartCount - state.cart[index].quantity
   let mystringCart = JSON.stringify(state.cart);
   window.localStorage.setItem('cart', mystringCart);
   
@@ -67,7 +66,7 @@ state.cart[index].quantity +=1;
 state.cart[index].totalPrice = state.cart[index].quantity * state.cart[index].price;
 state.cartCount +=1;
 
-console.log(state.cart[index].totalPrice);
+console.log(index);
 },
 remvQty(state, index){
 state.cart[index].quantity -= 1;

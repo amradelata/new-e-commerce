@@ -13,10 +13,14 @@
             <i class="fas fa-info">poen product</i>
           </nuxt-link>
         </div>
-        <div class="supCard">
+        <div class="supCard" v-if="item.quantity > 1">
           <v-btn @click="deletItemfromcart(index)">delet</v-btn>
           <v-btn @click="addToqty(index)">+1</v-btn>
           <v-btn @click="remvQty(index)">-1</v-btn>
+        </div>
+        <div v-else>
+          <v-btn @click="deletItemfromcart(index)">delet</v-btn>
+          <v-btn @click="addToqty(index)">+1</v-btn>
         </div>
       </div>
 
@@ -36,7 +40,7 @@
           src="https://static05.jockeyindia.com/uploads/images/img-no-cartitems.png"
           alt
         />
-        <span>your cart is empty!</span>
+        <!-- <span>your cart is empty!</span> -->
       </div>
     </div>
   </div>

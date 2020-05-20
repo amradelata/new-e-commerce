@@ -5,7 +5,7 @@
           {{item.title}}
         </li>
     </ul>-->
-    <v-row no-gutters>
+    <v-row no-gutters class="myprodactscards">
       <v-col v-for="product in products" :key="product.id" cols="12" sm="4">
         <v-card class="ma-2 myCard" outlined tile>
           <nuxt-link :to="'/products/' + product.id">
@@ -80,5 +80,10 @@ a {
   width: 100%;
   background-size: contain;
   background-position: center center;
+}
+@media screen and (max-width: 768px) {
+  .myprodactscards {
+    margin-bottom: 50px;
+  }
 }
 </style>

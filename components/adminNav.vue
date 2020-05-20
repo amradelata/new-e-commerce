@@ -1,88 +1,98 @@
 <template>
-  <v-card
-    class="mx-auto fixed"
-    height="400"
-    width="256"
-  >
-    <v-navigation-drawer
-      class="deep-purple accent-4"
-      dark
-      permanent
-    >
-    <!--  -->
-    <nuxt-link to="admin">
-      <v-list>
-        <v-list-item
-            link
-        >
-          <v-list-item-icon>
-            
-            <v-icon>fas fa-search</v-icon>
-          </v-list-item-icon>
+  <div>
+    <ul class="productNav">
+      <nuxt-link to="admin">
+        <li>Control panel</li>
+      </nuxt-link>
+      <nuxt-link to="orders">
+        <li>orders</li>
+      </nuxt-link>
+      <nuxt-link to="users">
+        <li>users</li>
+      </nuxt-link>
+    </ul>
 
-          <v-list-item-content>
-            <v-list-item-title>Control panel</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </nuxt-link>
-<!--  -->
-<nuxt-link to="orders">
-      <v-list>
-        <v-list-item
-            link
-        >
-          <v-list-item-icon>
-            
-            <v-icon>mdi-cart</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Orders</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-</nuxt-link>
-<!--  -->
-<nuxt-link to="users">
-      <v-list>
-        <v-list-item
-            link
-        >
-          <v-list-item-icon>
-            
-            <v-icon>fas fa-edit</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>user</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-</nuxt-link>
-      <!--  -->
-      <template v-slot:append>
-        <div class="pa-2">
-          <v-btn block>-</v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
-  </v-card>
+    <!-- phone -->
+    <ul class="productNavPhone">
+      <nuxt-link to="admin">
+        <li>Control panel</li>
+      </nuxt-link>
+      <nuxt-link to="orders">
+        <li>orders</li>
+      </nuxt-link>
+      <nuxt-link to="users">
+        <li>users</li>
+      </nuxt-link>
+    </ul>
+  </div>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-
-      }
-    },
-  }
+export default {};
 </script>
 
 <style scoped>
-.fixed{
+.productNav {
+  list-style-type: none;
+  text-align: center;
   position: fixed;
-  top: 150px;
+  right: 0;
+  left: 0;
+  top: 100px;
+  z-index: 9999;
+}
+.productNav li {
+  display: inline;
+}
+.productNav a {
+  display: inline-block;
+  padding: 1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #000;
+  font-size: 0.9em;
+  transition: all 1s;
+}
+.productNav a:hover {
+  text-decoration: underline;
+}
+/* phone */
+.productNavPhone {
+  list-style-type: none;
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  /* display: none; */
+}
+.productNavPhone li {
+  display: inline;
+}
+.productNavPhone a {
+  display: inline-block;
+  padding: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #000;
+  font-size: 0.9em;
+  transition: all 1s;
+}
+.productNavPhone a:hover {
+  text-decoration: underline;
+}
+.productNavPhone {
+  display: none;
+  padding-top: 10px;
+}
+@media screen and (max-width: 768px) {
+  .productNav {
+    display: none;
+  }
+
+  .productNavPhone {
+    display: block;
+    padding-left: 0;
+    position: absolute;
+    left: 10%;
+  }
 }
 </style>

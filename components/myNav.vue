@@ -7,6 +7,12 @@
             <nuxt-link to="/" class="logo">
               <v-toolbar-title>NUXT</v-toolbar-title>
             </nuxt-link>
+            <li class="active">
+              <nuxt-link to="/about">About</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/products">products</nuxt-link>
+            </li>
             <div class="flex-grow-1"></div>
             <ul class="right0">
               <input
@@ -16,16 +22,11 @@
                 v-model="searchVale"
                 @keyup.enter="searchRout"
               />
-              <li class="active">
-                <nuxt-link to="/about">About</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/products">products</nuxt-link>
-              </li>
+
               <li>
                 <nuxt-link to="/cart">
                   <v-icon>mdi-cart</v-icon>
-                  <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p>
+                  <!-- <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p> -->
                 </nuxt-link>
               </li>
               <button @click="loggedin" class="loginbtn" ref="loginbtn">Sign In</button>
@@ -57,6 +58,9 @@
               @keyup.enter="searchRout"
             />
           </li>
+          <li>
+            <button @click="searchRout">search</button>
+          </li>
           <li @click="togelPhoneNave()">
             <nuxt-link to="/products">products</nuxt-link>
           </li>
@@ -64,10 +68,31 @@
             <nuxt-link to="/about">About</nuxt-link>
           </li>
           <li @click="togelPhoneNave()">
+            <nuxt-link to="/shoes">shoes</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/tShirt">tShirt</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/jacket">jacket</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/suit">suit</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/blazer">blazer</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/pants">pants</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/coat">coat</nuxt-link>
+          </li>
+
+          <li @click="togelPhoneNave()">
             <nuxt-link to="/cart">
-              cart
-              <v-icon>mdi-cart</v-icon>
-              <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p>
+              <v-icon>mdi-cart</v-icon>cart
+              <!-- <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p> -->
             </nuxt-link>
           </li>
         </ul>
@@ -176,7 +201,7 @@ li a {
 .navBody {
   overflow: hidden;
   /* padding: 35px; */
-  background: #ecf0f1;
+  background: ;
   text-align: center;
   transition: all 0.6s ease-in-out;
   height: 0;
@@ -248,6 +273,9 @@ li a {
   }
   .navDiskTop {
     display: none;
+  }
+  .changenavBody {
+    height: 110vh;
   }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <div class="flex">
-    <v-parallax
-      class="hero"
-      dark
-      src="http://static1.squarespace.com/static/5ab6dd92ee1759b04ca214fd/t/5c58bd4524a694d91c7fe6d1/1549319504611/Mayer+Wasner_Shop.png?format=1500w"
-    ></v-parallax>
+  <div>
+    <div class="hero samstyle">
+      <div class="ovrlay">
+        <div class="herotext">The ultimate clothing to see the world in.</div>
+      </div>
+    </div>
     <div class="skils">
       <v-container>
         <h3 style="text-align:center">using in this project</h3>
@@ -69,10 +69,11 @@
       </v-container>
     </div>
 
-    <v-parallax
-      src="https://images.pexels.com/photos/2447042/pexels-photo-2447042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-      height="500"
-    ></v-parallax>
+    <div class="suphero samstyle">
+      <div class="ovrlay">
+        <div class="herotext">Be exclusive, Be Devine, Be yourself.</div>
+      </div>
+    </div>
 
     <!--  -->
     <div class="skils">
@@ -122,10 +123,38 @@ export default {
 </script>
 
 <style scoped>
+.samstyle {
+  margin-top: -50px;
+  width: 100%;
+  height: 50vh;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  text-align: center;
+}
 .hero {
-  height: 130vh;
-  margin-top: 50px;
-  /* display: none; */
+  background-image: url("https://images.squarespace-cdn.com/content/5ab6dd92ee1759b04ca214fd/1549319498737-60FFHJSX50IZ365U7AFJ/Mayer+Wasner_Shop.png?format=1500w&content-type=image%2Fpng");
+}
+.suphero {
+  background-image: url("https://images.pexels.com/photos/2447042/pexels-photo-2447042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+}
+.herotext {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  font-weight: 100;
+  color: #fff;
+}
+.hero .ovrlay,
+.suphero .ovrlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 h1,
 h4 {
@@ -144,5 +173,13 @@ h4 {
 }
 .margin {
   margin-top: 50px;
+}
+@media screen and (max-width: 768px) {
+  .herotext {
+    font-size: 35px;
+  }
+  .hero {
+    margin-top: 0;
+  }
 }
 </style>

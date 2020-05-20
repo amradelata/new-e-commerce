@@ -1,90 +1,86 @@
 <template>
-  <div class="container top" id="admin">
+  <div class="top" id="admin">
     <adminNav />
-    <div class="container relatev">
-      <div class="sections">
-        <v-card-text class="form">
-          <v-form class="px-3" ref="form">
-            <v-text-field v-model="addProductValue" label="NAME" :rules="inputRules"></v-text-field>
-            <v-text-field v-model="addProductImg" label="IMAGE" :rules="inputRules"></v-text-field>
-            <v-text-field v-model="addProductPric" label="PRICE" :rules="inputRules"></v-text-field>
-            <v-text-field v-model="addProductCategory" label="CATEGORY" :rules="inputRules"></v-text-field>
-            <label>
-              <h3>first cabetal in category is capetal</h3>
-            </label>
-            <button @click="addProduct" class="link">Add product</button>
-          </v-form>
-        </v-card-text>
-        <!--  -->
-        <table v-for="(product,index) in products" :key="product.id">
-          <tr>
-            <td>
-              {{product.id}}
-              <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
-            </td>
-            <td>
-              <!-- <h3 class="inline">{{product.name}}</h3> -->
-              <span :id="product.id" ref="span">{{product.name}}</span>
-              <br />
-              <h5 style="color:#006fcc" class="inline">{{product.price + " $"}}</h5>
-            </td>
-            <td class="right">
-              <button
-                @click="edit(index)"
-                :style="{'display': change}"
-                class="link"
-                ref="edit"
-                id="edit"
-              >edit</button>
-              <input
-                class="input is-success"
-                type="text"
-                :style="{'display': input}"
-                :value="product.name"
-                ref="input1"
-                id="input"
-              />
-              <input
-                class="input is-success"
-                type="text"
-                :style="{'display': input}"
-                :value="product.img_url"
-                ref="input2"
-                id="input"
-              />
-              <input
-                class="input is-success"
-                type="text"
-                :style="{'display': input}"
-                :value="product.price"
-                ref="input3"
-                id="input"
-              />
-              <input
-                class="input is-success"
-                type="text"
-                :style="{'display': input}"
-                :value="product.category"
-                ref="input4"
-                id="input"
-              />
-              <button
-                @click="remove(index = product.id)"
-                :style="{'display': delet}"
-                class="danger"
-                ref="delete"
-                id="delete"
-              >delete</button>
-              <button
-                @click="save(index)"
-                :style="{'display': saveChang}"
-                class="success"
-                ref="save"
-                id="save"
-              >save</button>
-            </td>
-          </tr>
-        </table>
+    <v-card-text class="form" style="padding-top: 100px">
+      <v-form class="px-3" ref="form">
+        <v-text-field v-model="addProductValue" label="NAME" :rules="inputRules"></v-text-field>
+        <v-text-field v-model="addProductImg" label="IMAGE" :rules="inputRules"></v-text-field>
+        <v-text-field v-model="addProductPric" label="PRICE" :rules="inputRules"></v-text-field>
+        <v-text-field v-model="addProductCategory" label="CATEGORY" :rules="inputRules"></v-text-field>
+        <label>
+          <h3>first cabetal in category is capetal</h3>
+        </label>
+        <button @click="addProduct" class="link">Add product</button>
+      </v-form>
+    </v-card-text>
+
+    <div class="admisCards">
+      <div v-for="(product,index) in products" :key="product.id" class="adminCard">
+        <div class>
+          {{product.id}}
+          <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
+        </div>
+        <div :id="product.id" ref="span">
+          {{product.price}}
+          <br />
+          {{product.name}}
+        </div>
+        <div class>
+          <button
+            @click="edit(index)"
+            :style="{'display': change}"
+            class="link"
+            ref="edit"
+            id="edit"
+          >edit</button>
+          <input
+            class="input is-success"
+            type="text"
+            :style="{'display': input}"
+            :value="product.name"
+            ref="input1"
+            id="input"
+          />
+          <input
+            class="input is-success"
+            type="text"
+            :style="{'display': input}"
+            :value="product.img_url"
+            ref="input2"
+            id="input"
+          />
+          <input
+            class="input is-success"
+            type="text"
+            :style="{'display': input}"
+            :value="product.price"
+            ref="input3"
+            id="input"
+          />
+          <input
+            class="input is-success"
+            type="text"
+            :style="{'display': input}"
+            :value="product.category"
+            ref="input4"
+            id="input"
+          />
+          <button
+            @click="remove(index = product.id)"
+            :style="{'display': delet}"
+            class="danger"
+            ref="delete"
+            id="delete"
+          >delete</button>
+          <br />
+          <button
+            @click="save(index)"
+            :style="{'display': saveChang}"
+            class="success"
+            ref="save"
+            id="save"
+          >save</button>
+        </div>
       </div>
     </div>
   </div>
@@ -206,84 +202,6 @@ export default {
 
 
 <style scoped>
-.relatev {
-  position: relative;
-}
-.sections {
-  width: 70vw;
-  position: absolute;
-  right: 0;
-}
-.content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%);
-}
-.content span {
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%);
-  font-family: fantasy;
-  font-size: 39px;
-}
-h1,
-p {
-  color: #000;
-}
-.img {
-  height: 50px;
-  width: 50%;
-  display: inline-block;
-  background-size: contain;
-  background-position: center center;
-}
-.card {
-  padding: 20px;
-  text-align: center;
-  /* margin-bottom: 35px; */
-}
-.next-step {
-  background: #91ce3f;
-  width: 100%;
-  left: 0;
-  margin-top: 40px;
-  position: absolute;
-  color: #fff;
-  padding: 10px;
-  border-radius: 3px;
-}
-.next-step:focus {
-  background: #008bff;
-}
-
-/*  */
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 20px;
-  text-align: center;
-}
-
-.right {
-  text-align: left;
-  width: 25%;
-}
-.inline {
-  display: inline;
-}
-#admin input {
-  border: 1px solid #ccc;
-  margin: 5px 0;
-}
 .link,
 .danger,
 .success {
@@ -300,8 +218,34 @@ th {
 .success {
   background: #7bed9f;
 }
-.form {
-  height: 400px;
-  margin-bottom: 50px;
+
+.admisCards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.adminCard {
+  flex-basis: calc(33.333% - 20px);
+  display: inline-block;
+  margin: 10px;
+  overflow: hidden;
+  /* background: #ccc; */
+  text-align: center;
+  padding: 20px;
+}
+.img {
+  width: 100%;
+  background-size: contain;
+  background-position: center center;
+}
+#input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px 0;
+  display: block;
+}
+@media screen and (max-width: 768px) {
+  .adminCard {
+    flex-basis: calc(100% - 20px);
+  }
 }
 </style>

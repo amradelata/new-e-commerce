@@ -1,17 +1,17 @@
 <template>
   <v-app dark>
     <myNav />
-    <mypopup />
+    <!-- <mypopup /> -->
     <productNav />
-    <div style="margin-top: 130px">
+    <div class="mybody">
       <nuxt />
     </div>
 
-    <v-footer :fixed="fixed" app>
+    <v-footer style="margin-top:100px">
       <span>
-        <!-- Made by -->
+        Made by
         <a href="https://www.amradelata.com/">amradelata</a>
-        <!-- &copy; {{ new Date().getFullYear() }} -->
+        &copy; {{ new Date().getFullYear() }}
       </span>
     </v-footer>
   </v-app>
@@ -52,3 +52,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.mybody {
+  margin-top: 100px;
+}
+@media screen and (max-width: 768px) {
+  .mybody {
+    margin-top: 0;
+  }
+}
+</style>

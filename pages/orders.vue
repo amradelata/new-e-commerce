@@ -1,5 +1,5 @@
 <template>
-  <div id="order" class="container top">
+  <div>
     <div>
       <div id="enmpty" ref="enmpty" style="display:none; color:#fff">
         <div class="content">
@@ -11,9 +11,9 @@
 
     <adminNav />
     <div>
-      <div class="tabul top">
-        <h2>order:</h2>
-        <table v-for="(product, i) in cart" :key="i">
+      <div class="tabul">
+        <!-- <h2>order:</h2> -->
+        <table v-for="(product, i) in cart" :key="i" style="margin-top:100px">
           <tr>
             <td>
               <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
@@ -26,15 +26,17 @@
             </td>
           </tr>
         </table>
-        <h2>userCardnumberInfo:</h2>
-        <h4>userCardnumber:</h4>
-        {{userCardnumber}}
-        <br />
-        <h4>Expiration:</h4>
-        {{ExpirationNmper}}
-        <br />
-        <h4>CVC:</h4>
-        {{cvcNumber}}
+        <div class="usercardinfo">
+          <h2>userCardnumberInfo:</h2>
+          <h4>userCardnumber:</h4>
+          {{userCardnumber}}
+          <br />
+          <h4>Expiration:</h4>
+          {{ExpirationNmper}}
+          <br />
+          <h4>CVC:</h4>
+          {{cvcNumber}}
+        </div>
         <hr />
       </div>
     </div>
@@ -148,6 +150,7 @@ th {
   width: 35%;
 }
 .qty {
+  padding: 30px;
   border: 1px solid #ddd;
   padding: 5px;
   display: inline;
@@ -161,6 +164,9 @@ th {
 .tabul {
   position: absolute;
   right: 0;
-  width: 70vw;
+  width: 100vw;
+}
+.usercardinfo {
+  text-align: center;
 }
 </style>

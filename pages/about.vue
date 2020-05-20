@@ -7,7 +7,7 @@
       <p class="content">I'm Front end developer I made this website to show my skills,</p>
       <p class="subheading">
         my website:
-        <a href="https://amradelata.github.io/">click here</a>
+        <a href="https://www.amradelata.com/">click here</a>
       </p>
       <p class="subheading">
         my github:

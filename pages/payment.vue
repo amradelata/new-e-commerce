@@ -1350,6 +1350,10 @@ Credits
   display: block;
 }
 @media screen and (max-width: 768px) {
+  .card-form > p.field {
+    width: 100%;
+    margin: 20px 0;
+  }
   .payment {
     width: 100%;
     /* margin-top: 100vh; */

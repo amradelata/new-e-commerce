@@ -26,34 +26,6 @@
         <li>Coat</li>
       </nuxt-link>
     </ul>
-
-    <!-- phone -->
-    <ul class="productNavPhone">
-      <nuxt-link to="/shoes">
-        <li>Shoes</li>
-      </nuxt-link>
-      <nuxt-link to="/tShirt">
-        <li>T-shirt</li>
-      </nuxt-link>
-      <nuxt-link to="/shirt">
-        <li>Shirt</li>
-      </nuxt-link>
-      <nuxt-link to="/jacket">
-        <li>Jacket</li>
-      </nuxt-link>
-      <nuxt-link to="/suit">
-        <li>Suit</li>
-      </nuxt-link>
-      <nuxt-link to="/blazer">
-        <li>Blazer</li>
-      </nuxt-link>
-      <nuxt-link to="/pants">
-        <li>Pants</li>
-      </nuxt-link>
-      <nuxt-link to="/coat">
-        <li>Coat</li>
-      </nuxt-link>
-    </ul>
   </div>
 </template>
 
@@ -68,11 +40,15 @@ export default {};
   position: fixed;
   right: 0;
   left: 0;
-  top: 70px;
+  top: 45px;
   z-index: 9999;
+  background: #fff;
+
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 .productNav li {
   display: inline;
+  color: #000;
 }
 .productNav a {
   display: inline-block;
@@ -84,7 +60,7 @@ export default {};
   transition: all 1s;
 }
 .productNav a:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 /* phone */
 .productNavPhone {
@@ -119,8 +95,7 @@ export default {};
   }
 
   .productNavPhone {
-    display: block;
-    padding-left: 0;
+    display: none;
   }
 }
 </style>
