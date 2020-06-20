@@ -7,13 +7,13 @@
       <nuxt />
     </div>
 
-    <v-footer style="margin-top:100px">
+    <!-- <v-footer style="margin-top:100px">
       <span>
         Made by
         <a href="https://www.amradelata.com/">amradelata</a>
         &copy; {{ new Date().getFullYear() }}
       </span>
-    </v-footer>
+    </v-footer>-->
   </v-app>
 </template>
 

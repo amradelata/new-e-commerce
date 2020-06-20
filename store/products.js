@@ -50,7 +50,7 @@ totalPrice(state){
       total += item.totalPrice;
     }
     window.localStorage.setItem('mytotalPrice', total);
-    window.localStorage.setItem('cartCount', state.cartCount);
+    // window.localStorage.setItem('cartCount', state.cartCount);
       state.totalPrice = total
     return total;
 },

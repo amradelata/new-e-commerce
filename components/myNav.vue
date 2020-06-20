@@ -29,7 +29,14 @@
                   <!-- <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p> -->
                 </nuxt-link>
               </li>
-              <button @click="loggedin" class="loginbtn" ref="loginbtn">Sign In</button>
+              <li>
+                <div class="li" v-if="this.userLog != null">
+                  <button @click="loggedin" class="loginbtn" ref="loginbtn">hi amr</button>
+                </div>
+                <div class="li" v-else>
+                  <button @click="loggedin" class="loginbtn" ref="loginbtn">Sign In</button>
+                </div>
+              </li>
             </ul>
           </v-toolbar>
         </div>
@@ -49,6 +56,18 @@
       </div>
       <div class="navBody" ref="changenavBody">
         <ul>
+          <li>
+            <div class="li" v-if="this.userLog != null">
+              <button
+                @click="loggedin(), togelPhoneNave()"
+                class="loginbtn"
+                ref="loginbtn"
+              >{{'Hi ' + this.userName}}</button>
+            </div>
+            <div class="li" v-else>
+              <button @click="loggedin(), togelPhoneNave()" class="loginbtn" ref="loginbtn">Sign In</button>
+            </div>
+          </li>
           <li>
             <input
               class="inputPhone"
@@ -110,7 +129,9 @@ export default {
       searchVale: "",
       prodactSearch: [],
       mycartCount: "",
-      localStorage: {}
+      localStorage: {},
+      userLog: localStorage.getItem("status"),
+      userName: localStorage.getItem("userfirstName")
     };
   },
   methods: {
@@ -149,7 +170,8 @@ export default {
 ul {
   list-style-type: none;
 }
-li {
+li,
+.li {
   display: inline;
 }
 li a {

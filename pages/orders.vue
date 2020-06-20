@@ -1,16 +1,23 @@
 <template>
   <div>
-    <div>
-      <div id="enmpty" ref="enmpty" style="display:none; color:#fff">
-        <div class="content">
-          <img src="https://static05.jockeyindia.com/uploads/images/img-no-cartitems.png" alt />
-          <span>your cart is empty!</span>
-        </div>
-      </div>
+    <adminNav />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="show" v-if="!$store.state.products.cart.length">
+      <i>there is no orders</i>
+      <nuxt-link to="/products">
+        <v-btn class="thankYouBtn">back to shopping</v-btn>
+      </nuxt-link>
+      <img
+        class="empyimg"
+        src="https://images.pexels.com/photos/296916/pexels-photo-296916.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      />
     </div>
 
-    <adminNav />
-    <div>
+    <div v-else>
       <div class="tabul">
         <!-- <h2>order:</h2> -->
         <table v-for="(product, i) in cart" :key="i" style="margin-top:100px">
@@ -28,6 +35,9 @@
         </table>
         <div class="usercardinfo">
           <h2>userCardnumberInfo:</h2>
+          <h4>userName:</h4>
+          {{username}}
+          <br />
           <h4>userCardnumber:</h4>
           {{userCardnumber}}
           <br />
@@ -36,6 +46,9 @@
           <br />
           <h4>CVC:</h4>
           {{cvcNumber}}
+          <br />
+          <h4>The required amount from the customer:</h4>
+          {{totalPrice + " $"}}
         </div>
         <hr />
       </div>
@@ -64,7 +77,9 @@ export default {
       cart: [],
       cvcNumber: "",
       ExpirationNmper: "",
-      userCardnumber: ""
+      userCardnumber: "",
+      totalPrice: "",
+      username: ""
     };
   },
 
@@ -73,6 +88,8 @@ export default {
     this.cvcNumber = localStorage.getItem("cvcNumber");
     this.ExpirationNmper = localStorage.getItem("ExpirationNmper");
     this.userCardnumber = localStorage.getItem("userCardnumber");
+    this.totalPrice = localStorage.getItem("mytotalPrice");
+    this.username = localStorage.getItem("userfirstName");
   }
 };
 </script>
@@ -168,5 +185,18 @@ th {
 }
 .usercardinfo {
   text-align: center;
+}
+.show {
+  text-align: center;
+  /* margin: 50px;
+  margin-bottom: 100px; */
+}
+.show button,
+.show i {
+  margin: 50px;
+}
+.show img {
+  width: 100%;
+  height: 100%;
 }
 </style>

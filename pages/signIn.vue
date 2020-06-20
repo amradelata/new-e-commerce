@@ -45,6 +45,10 @@ export default {
         password: this.password
       });
       localStorage.setItem("status", "loggedIn");
+      localStorage.setItem("userfirstName", this.firstName);
+      localStorage.setItem("userlastName", this.lastName);
+      localStorage.setItem("useremail", this.email);
+      localStorage.setItem("userpassword", this.password);
       this.$router.replace("/products");
       // this.password = ''
       // this.email = ''

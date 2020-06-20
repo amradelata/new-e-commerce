@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="hied" v-show="!$store.state.products.cart.length">
+      <i>Please add some products to cart.</i>
+      <nuxt-link to="/products">
+        <v-btn class="thankYouBtn">back to shopping</v-btn>
+      </nuxt-link>
+      <img
+        class="empyimg"
+        src="https://images.pexels.com/photos/296916/pexels-photo-296916.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      />
+    </div>
+
     <div v-if="$store.state.products.cart.length > 0">
       <div class="dadCrds" v-for="(item , index) in this.cartItems" :key="item.id">
         <div class="supCard">
@@ -30,17 +41,6 @@
         <!-- <span style="display:inline">Total Items:</span>
         <h2 style="color:#006fcc; display:inline">{{this.totalItems}}</h2>-->
         <v-btn class="cartbtn" @click="toPayment">Proceed to checkout</v-btn>
-      </div>
-    </div>
-    <!-- if the cart is empty -->
-    <div v-else class="is-boxed is-right">
-      <div class="content">
-        <img
-          class="empyimg"
-          src="https://static05.jockeyindia.com/uploads/images/img-no-cartitems.png"
-          alt
-        />
-        <!-- <span>your cart is empty!</span> -->
       </div>
     </div>
   </div>
@@ -134,6 +134,17 @@ export default {
 .supCard span {
   margin: 0 35px;
 }
+.hied {
+  text-align: center;
+}
+.hied button,
+.hied i {
+  margin: 20px;
+}
+.hied img {
+  width: 100%;
+  height: 100%;
+}
 @media screen and (max-width: 768px) {
   .supCard {
     flex-basis: calc(100% - 20px);
@@ -142,9 +153,6 @@ export default {
     margin: 0;
     display: block;
     margin: 20px 0;
-  }
-  .content .empyimg {
-    width: 100vw;
   }
 }
 </style>
