@@ -35,8 +35,8 @@ export default {};
 
 <style scoped>
 .productNav {
-  list-style-type: none;
-  text-align: center;
+  display: none;
+  /* text-align: center;
   position: fixed;
   right: 0;
   left: 0;
@@ -44,13 +44,13 @@ export default {};
   z-index: 9999;
   background: #fff;
 
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
 }
-.productNav li {
+/* .productNav li {
   display: inline;
   color: #000;
-}
-.productNav a {
+} */
+/* .productNav a {
   display: inline-block;
   padding: 1em;
   text-transform: uppercase;
@@ -58,7 +58,7 @@ export default {};
   color: #000;
   font-size: 0.9em;
   transition: all 1s;
-}
+} */
 .productNav a:hover {
   /* text-decoration: underline; */
 }
@@ -70,10 +70,10 @@ export default {};
   z-index: 9999;
   /* display: none; */
 }
-.productNavPhone li {
+/* .productNavPhone li {
   display: inline;
-}
-.productNavPhone a {
+} */
+/* .productNavPhone a {
   display: inline-block;
   padding: 10px;
   text-transform: uppercase;
@@ -84,18 +84,18 @@ export default {};
 }
 .productNavPhone a:hover {
   text-decoration: underline;
-}
-.productNavPhone {
+} */
+/* .productNavPhone {
   display: none;
   padding-top: 10px;
-}
+} */
 @media screen and (max-width: 768px) {
-  .productNav {
+  /* .productNav {
     display: none;
   }
 
   .productNavPhone {
     display: none;
-  }
+  } */
 }
 </style>

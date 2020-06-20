@@ -7,12 +7,36 @@
             <nuxt-link to="/" class="logo">
               <v-toolbar-title>NUXT</v-toolbar-title>
             </nuxt-link>
-            <li class="active">
-              <nuxt-link to="/about">About</nuxt-link>
-            </li>
-            <li>
-              <nuxt-link to="/products">products</nuxt-link>
-            </li>
+            <nuxt-link to="/about" class="navitem">
+              <li>about</li>
+            </nuxt-link>
+            <nuxt-link to="/products" class="navitem">
+              <li>products</li>
+            </nuxt-link>
+            <nuxt-link to="/shoes" class="navitem">
+              <li>Shoes</li>
+            </nuxt-link>
+            <nuxt-link to="/tShirt" class="navitem">
+              <li>T-shirt</li>
+            </nuxt-link>
+            <nuxt-link to="/shirt" class="navitem">
+              <li>Shirt</li>
+            </nuxt-link>
+            <nuxt-link to="/jacket" class="navitem">
+              <li>Jacket</li>
+            </nuxt-link>
+            <nuxt-link to="/suit" class="navitem">
+              <li>Suit</li>
+            </nuxt-link>
+            <nuxt-link to="/blazer" class="navitem">
+              <li>Blazer</li>
+            </nuxt-link>
+            <nuxt-link to="/pants" class="navitem">
+              <li>Pants</li>
+            </nuxt-link>
+            <nuxt-link to="/coat" class="navitem">
+              <li>Coat</li>
+            </nuxt-link>
             <div class="flex-grow-1"></div>
             <ul class="right0">
               <input
@@ -163,6 +187,13 @@ export default {
 };
 </script>
 <style scoped>
+.navitem {
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 300;
+  padding: 10px;
+  color: #000;
+}
 .logo {
   color: #000;
   text-decoration: none;
@@ -229,7 +260,7 @@ li a {
   height: 0;
 }
 .changenavBody {
-  height: 250px;
+  height: 100vh;
 }
 .navBody li {
   display: block;
@@ -297,7 +328,7 @@ li a {
     display: none;
   }
   .changenavBody {
-    height: 110vh;
+    /* height: 110vh; */
   }
 }
 </style>
