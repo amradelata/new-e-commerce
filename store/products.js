@@ -1,97 +1,172 @@
 import axios from 'axios';
-import Vue from 'vue';
+import Vue from 'Vue';
 
-if (process.browser) {
-  var cart = localStorage.getItem('cart');
-  var cartCount = localStorage.getItem('cartCount');
-}
 export const state = () => ({
+    users: [],
     products: [],
     single: [],
-    users: [],
-    cart: cart ? JSON.parse(cart) : [],
-    cartCount: cartCount ? parseInt(cartCount) : 0,
-    totalPrice:0
-   
+    mylocalStorageCard: JSON.parse(localStorage.getItem("cart")),
+    mylocalStorageTolalPrice: localStorage.getItem("totalprice"),
+    mylocalStorageQty:localStorage.getItem("qty"),
   })
 
 
+
 export const mutations = {
-  setProducts: (state, products) => (state.products = products),
+  
   setUsers: (state, users) => (state.users = users),
   setSinglePage: (state, single) => (state.single = single),
-  addToCart(state, single) {
-    //if this product already in my cart this.quantity +1
-    let found = state.cart.find(product => product.id == single.id);
-    if(found){
-      found.quantity ++;
-      found.totalPrice = found.quantity * found.price;
+  setProducts: (state, products) => (state.products = products),
+//cart functions
 
+    sitAddFromQuantty(state, index) {
+     const myclickdObject =state.mylocalStorageCard[index]
+      myclickdObject.quantity++;
+      state.mylocalStorageQty++;
 
-        let mystringCart = JSON.stringify(state.cart);
-        window.localStorage.setItem('cart', mystringCart);
-      // if this a new in cart add to to quantity 1, add to totalPrice the price , push it to my cart and add 1 to cartCount
-    }else{
-      Vue.set(single, 'quantity', 1);
-      Vue.set(single, 'totalPrice', single.price);
-      state.cart.push(single);
+      state.mylocalStorageTolalPrice =
+      +state.mylocalStorageTolalPrice + +myclickdObject.price;
+    },
+    sitRemoveFromQuantty(state,index){
+      const myclickdObject =state.mylocalStorageCard[index]
+        // console.log(myclickdObject)
+      myclickdObject.quantity--;
+      state.mylocalStorageQty--;
 
-      let mystringCart = JSON.stringify(state.cart);
-      window.localStorage.setItem('cart', mystringCart);
-    }
-    state.cartCount++;
+      state.mylocalStorageTolalPrice =
+        +state.mylocalStorageTolalPrice + -myclickdObject.price;
+      if (myclickdObject.quantity === 0) {
+        state.mylocalStorageCard.splice(index, 1);
+      }
+      // console.log(state.mylocalStorageCard,myclickdObject,state.mylocalStorageQty,state.mylocalStorageTolalPrice);
+    },
+        sitmydelete(state,index) {
+      const myclickdObject =state.mylocalStorageCard[index]
+      state.mylocalStorageCard.splice(index, 1);
+      state.mylocalStorageTolalPrice =
+        +state.mylocalStorageTolalPrice +
+        -myclickdObject.price * myclickdObject.quantity;
+      state.mylocalStorageQty =
+        +state.mylocalStorageQty + -myclickdObject.quantity;
+      
+      
+    },
     
-},
-totalPrice(state){
+    savelocalstorage(state) {
+      // localStorage
+      localStorage.setItem("totalprice", state.mylocalStorageTolalPrice);
+      localStorage.setItem("qty", state.mylocalStorageQty);
+      let mystringCart = JSON.stringify(state.mylocalStorageCard); //convert  my array of opject to string to save it on localStorage
+      localStorage.setItem("cart", mystringCart); //set cart string
+      // // localStorage
+    },
+    // old
+ addToCart(state, single) {
+      if (
+        state.mylocalStorageCard === null||
+         state.mylocalStorageCard.length === 0 
+      ){
+      state.mylocalStorageCard = [];
+      state.single.quantity = 1
+      state.mylocalStorageCard.push(state.single)
+      state.mylocalStorageTolalPrice =
+      +state.mylocalStorageTolalPrice + +state.single.price;
+      state.mylocalStorageQty++;
+      // savelocalStorage
+      localStorage.setItem("totalprice", state.mylocalStorageTolalPrice);
+      localStorage.setItem("qty", state.mylocalStorageQty);
+      let mystringCart = JSON.stringify(state.mylocalStorageCard); //convert  my array of opject to string to save it on localStorage
+      localStorage.setItem("cart", mystringCart); //set cart string
+     // savelocalStorage
+      } else if (
+        state.mylocalStorageCard != null &&
+        state.mylocalStorageCard.length > 0
+      ) {
+       //if this the new item but not the first in cart
+        let mystringCartFromLocalStorage = localStorage.getItem("cart"); //get my string cart from localStorage
+        let myObject = JSON.parse(mystringCartFromLocalStorage); // return my sting to array of objects
+        console.log(state.mylocalStorageCard);
+        const findInMylocalStorageCard = state.mylocalStorageCard.find(
+          //search in mylocalStorageCard array of my cliked item
+          item => item.id === single
+        );  
+        if (findInMylocalStorageCard != undefined) {
+          //if this item in my cart. do not add it again  add to qty ++
+          findInMylocalStorageCard.quantity++;
+          state.mylocalStorageQty++;
+
+          state.mylocalStorageTolalPrice =
+            +state.mylocalStorageTolalPrice + +findInMylocalStorageCard.price;
+          // savelocalStorage
+          localStorage.setItem("totalprice", state.mylocalStorageTolalPrice);
+          localStorage.setItem("qty", state.mylocalStorageQty);
+          let mystringCart = JSON.stringify(state.mylocalStorageCard); //convert  my array of opject to string to save it on localStorage
+          localStorage.setItem("cart", mystringCart); //set cart string
+        // savelocalStorage
+        }else{
+          //if i have items in my cart but state selected item not found
+          state.single.quantity = 1; //add new key quantity = 1
+          myObject.push(state.single); //push this item to my local storedg cart
+          state.mylocalStorageCard = myObject; //add my local storedg cart to my cart opject
+          state.mylocalStorageTolalPrice =
+            +state.mylocalStorageTolalPrice + +state.single.price;
+          state.mylocalStorageQty++;
+          // savelocalStorage
+          localStorage.setItem("totalprice", state.mylocalStorageTolalPrice);
+          localStorage.setItem("qty", state.mylocalStorageQty);
+          let mystringCart = JSON.stringify(state.mylocalStorageCard); //convert  my array of opject to string to save it on localStorage
+          localStorage.setItem("cart", mystringCart); //set cart string
+        // savelocalStorage
+        }
+      }
     console.log(state)
-    console.log(state.cartCount)
-    let total = 0
-    for (let item of state.cart) {
-      total += item.totalPrice;
-    }
-    window.localStorage.setItem('mytotalPrice', total);
-    // window.localStorage.setItem('cartCount', state.cartCount);
-      state.totalPrice = total
-    return total;
-},
-deletItemfromcart(state, index){
-  state.cart.splice(index, 1);
-  let mystringCart = JSON.stringify(state.cart);
-  window.localStorage.setItem('cart', mystringCart);
-  
-
-},
-addToqty(state, index){
-state.cart[index].quantity +=1;
-state.cart[index].totalPrice = state.cart[index].quantity * state.cart[index].price;
-state.cartCount +=1;
-
-console.log(index);
-},
-remvQty(state, index){
-state.cart[index].quantity -= 1;
-state.cart[index].totalPrice = state.cart[index].quantity * state.cart[index].price;
-state.cartCount -=1;
+    
 }
 };
+ 
+//fetchdata
 export const actions = {
   async fetchProducts({commit}){
-    const response = await axios.get('https://vue-e-commerce-databse.herokuapp.com/products')
+    const myres = await axios.get('https://vue-e-commerce-databse.herokuapp.com/products')
 
-    commit('setProducts',response.data)
+    commit('setProducts',myres.data)
+},
+async fetchSinglePage({commit}, id){
+  const response = await axios.get(`https://vue-e-commerce-databse.herokuapp.com/products/${id}`)
+  commit('setSinglePage',response.data,id)
 },
 async fetchUsers({commit}){
   const response = await axios.get('https://vue-e-commerce-databse.herokuapp.com/users')
 
   commit('setUsers',response.data)
 },
-async fetchSinglePage({commit}, id){
-  const response = await axios.get(`https://vue-e-commerce-databse.herokuapp.com/products/${id}`)
-  commit('setSinglePage',response.data,id)
-},
+
+nuxtClientInit ({commit}) {
+      // I want get here state auth saved by persistedstate package
+    },
+    addNumber(context, number) {
+    context.commit("ADD_NUMBER", number);
+    }
+
 };
+
+const getters = {
+  getQty(state){
+    return state.mylocalStorageQty
+  },
+  getTotalPric(state){
+    return state.mylocalStorageTolalPrice
+  },
+  getmylocalStorageCard(state){
+    return state.mylocalStorageCard
+  }
+
+};
+
+//fetchdata
 export default {
   state,
   actions,
-  mutations
+  mutations,
+  getters
 }

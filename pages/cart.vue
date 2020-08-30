@@ -1,89 +1,82 @@
 <template>
   <div>
-    <div class="hied" v-show="!$store.state.products.cart.length">
-      <i>Please add some products to cart.</i>
-      <nuxt-link to="/products">
-        <v-btn class="thankYouBtn">back to shopping</v-btn>
-      </nuxt-link>
-      <img
-        class="empyimg"
-        src="https://images.pexels.com/photos/296916/pexels-photo-296916.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      />
-    </div>
+    <!-- {{$store.state.products.countPlusLocalState}} -->
+    <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
+      <p class="is-size-3">all item/s {{getMyQty}}</p>
 
-    <div v-if="$store.state.products.cart.length > 0">
-      <div class="dadCrds" v-for="(item , index) in this.cartItems" :key="item.id">
-        <div class="supCard">
+      <li class="cart" v-for="(item,index) in getmylocalStorageCard" :key="item.id">
+        <div class="card">
           <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+          <p class="is-size-6">{{item.name}}</p>
+          <p class="is-size-6 has-text-success">{{item.price}}$</p>
+          {{item.quantity}}
+          <div class="cartbuttons">
+            <button class="cartbutton button is-danger" @click="mydelete(index)">delete</button>
+            <button
+              v-if="item.quantity"
+              class="cartbutton button is-light"
+              @click="removefromquantty(index)"
+            >-</button>
+            <button class="cartbutton button is-light" @click="addtoquantty(index)">+</button>
+          </div>
         </div>
-        <div class="supCard">
-          <span>{{item.name}}</span>
-          <span>{{item.price}}$</span>
-          <span>{{item.quantity+" : qty"}}</span>
-          <nuxt-link :to="'/products/' + item.id">
-            <i class="fas fa-info">poen product</i>
-          </nuxt-link>
-        </div>
-        <div class="supCard" v-if="item.quantity > 1">
-          <v-btn @click="deletItemfromcart(index)">delet</v-btn>
-          <v-btn @click="addToqty(index)">+1</v-btn>
-          <v-btn @click="remvQty(index)">-1</v-btn>
-        </div>
-        <div v-else>
-          <v-btn @click="deletItemfromcart(index)">delet</v-btn>
-          <v-btn @click="addToqty(index)">+1</v-btn>
-        </div>
-      </div>
+      </li>
 
-      <div class="totalPrice">
-        <span style="display:inline">Total price:</span>
-        <h2 style="color:#006fcc; display:inline">{{this.totalPrice}} $</h2>
-        <!-- <span style="display:inline">Total Items:</span>
-        <h2 style="color:#006fcc; display:inline">{{this.totalItems}}</h2>-->
-        <v-btn class="cartbtn" @click="toPayment">Proceed to checkout</v-btn>
-      </div>
-    </div>
+      <p class="is-size-3 has-text-success">{{ ' total price : ' + getMyTotalPrice }}$</p>
+      <!-- <div class="is-size-5 flatshipping">Flat Shipping Credit 10 EGP</div> -->
+      <nuxt-link to="/payment">
+        <button class="button chekoutptn is-primary">Proceed to checkout</button>
+      </nuxt-link>
+
+      <!-- <button @click="refreshpage()" class="button">update cart</button> -->
+    </ul>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
 export default {
   data() {
     return {
-      // cartItems: this.$store.state.products.cart,
-      // totalPrice: this.$store.state.products.totalPrice,
-      // totalItems: this.$store.state.products.cartCount
-      cartItems: [],
-      totalPrice: 0,
-      totalItems: 0
+      mylocalStorageCard: [],
+      mylocalStorageQty: 0,
+      mylocalStorageTolalPrice: 0,
+      numberInput: 0
     };
   },
-  methods: {
-    deletItemfromcart(index) {
-      this.$store.commit("products/deletItemfromcart", index);
-      this.$store.commit("products/totalPrice");
+  computed: {
+    getMyQty() {
+      return this.$store.state.products.mylocalStorageQty;
     },
-    addToqty(index) {
-      this.$store.commit("products/addToqty", index);
-      this.$store.commit("products/totalPrice");
+    getMyTotalPrice() {
+      return this.$store.state.products.mylocalStorageTolalPrice;
     },
-    remvQty(index) {
-      this.$store.commit("products/remvQty", index);
-      this.$store.commit("products/totalPrice");
-    },
-    toPayment() {
-      if (localStorage.getItem("status") != null) {
-        this.$router.replace("/payment");
-      } else {
-        this.$router.replace("/signIn");
-      }
+    getmylocalStorageCard() {
+      return this.$store.state.products.mylocalStorageCard;
     }
   },
   mounted() {
-    this.cartItems = JSON.parse(localStorage.getItem("cart"));
-    this.totalPrice = JSON.parse(localStorage.getItem("mytotalPrice"));
-    this.totalItems = JSON.parse(localStorage.getItem("cartCount"));
-    console.log(this.cartItems);
+    //when i refresh  git my cart data from localStorage
+    this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
+    this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
+    this.mylocalStorageQty = localStorage.getItem("qty");
+  },
+  methods: {
+    addNumber(numberInput) {
+      this.$store.dispatch("products/addNumber", Number(numberInput));
+    },
+    addtoquantty(index) {
+      this.$store.commit("products/sitAddFromQuantty", index);
+      this.$store.commit("products/savelocalstorage");
+    },
+    removefromquantty(index) {
+      this.$store.commit("products/sitRemoveFromQuantty", index);
+      this.$store.commit("products/savelocalstorage");
+    },
+    mydelete(index) {
+      this.$store.commit("products/sitmydelete", index);
+      this.$store.commit("products/savelocalstorage");
+    }
   }
 };
 </script>
@@ -109,9 +102,9 @@ export default {
 .totalPrice {
   padding-top: 100px;
   display: flex;
-  align-items: center;
+  /* align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: center; */
   flex-wrap: wrap;
 }
 .totalPrice h2 {
@@ -122,9 +115,10 @@ export default {
 }
 
 .cardimgimg {
-  height: 200px;
+  height: 100px;
   background-size: contain;
   background-position: center center;
+  margin-bottom: 35px;
 }
 .supCard {
   flex-basis: calc(33.333% - 20px);
@@ -135,7 +129,7 @@ export default {
   margin: 0 35px;
 }
 .hied {
-  text-align: center;
+  /* text-align: center; */
 }
 .hied button,
 .hied i {
@@ -144,6 +138,10 @@ export default {
 .hied img {
   width: 100%;
   height: 100%;
+}
+.card {
+  border: 1px solid #ccc;
+  text-align: center;
 }
 @media screen and (max-width: 768px) {
   .supCard {

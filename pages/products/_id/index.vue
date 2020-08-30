@@ -10,7 +10,7 @@
           <p>{{single.description}}</p>
           <span>{{single.price}}</span>
           <nuxt-link :to="'/cart'">
-            <button @click="addToCart(single)">addto cart</button>
+            <button @click="addToCart(i = single.id)">addto cart</button>
           </nuxt-link>
         </div>
       </div>
@@ -23,7 +23,10 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      products: []
+      products: [],
+      mylocalStorageCard: [],
+      mylocalStorageQty: 0,
+      mylocalStorageTolalPrice: 0
     };
   },
   computed: {
@@ -31,13 +34,19 @@ export default {
       return this.$store.state.products.single;
     }
   },
+  mounted() {
+    //when i refresh  git my cart data from localStorage
+    this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
+    this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
+    this.mylocalStorageQty = localStorage.getItem("qty");
+  },
   created() {
     this.$store.dispatch("products/fetchSinglePage", this.id);
   },
   methods: {
     addToCart(single) {
       this.$store.commit("products/addToCart", single);
-      this.$store.commit("products/totalPrice", single);
+      // this.$store.commit("products/totalPrice", single);
     }
   }
 };
@@ -48,7 +57,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-
 .halfdev {
   flex-basis: calc(50% - 20px);
   display: inline-block;

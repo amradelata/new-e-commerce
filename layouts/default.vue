@@ -2,7 +2,6 @@
   <v-app dark>
     <myNav />
     <!-- <mypopup /> -->
-    <productNav />
     <div class="mybody">
       <nuxt />
     </div>
@@ -20,11 +19,9 @@
 <script>
 import myNav from "~/components/myNav.vue";
 import mypopup from "~/components/mypopup.vue";
-import productNav from "~/components/productNav.vue";
 export default {
   components: {
     myNav,
-    productNav,
     mypopup
   },
   data() {

@@ -7,12 +7,12 @@
             <nuxt-link to="/" class="logo">
               <v-toolbar-title>NUXT</v-toolbar-title>
             </nuxt-link>
-            <nuxt-link to="/about" class="navitem">
-              <li>about</li>
-            </nuxt-link>
             <nuxt-link to="/products" class="navitem">
-              <li>products</li>
+              <li>Shop</li>
             </nuxt-link>
+            <!-- <nuxt-link to="/products" class="navitem">
+              <li>products</li>
+            </nuxt-link>-->
             <nuxt-link to="/shoes" class="navitem">
               <li>Shoes</li>
             </nuxt-link>
@@ -104,11 +104,11 @@
           <li>
             <button @click="searchRout">search</button>
           </li>
-          <li @click="togelPhoneNave()">
+          <!-- <li @click="togelPhoneNave()">
             <nuxt-link to="/products">products</nuxt-link>
-          </li>
+          </li>-->
           <li @click="togelPhoneNave()">
-            <nuxt-link to="/about">About</nuxt-link>
+            <nuxt-link to="/products">Shop</nuxt-link>
           </li>
           <li @click="togelPhoneNave()">
             <nuxt-link to="/shoes">shoes</nuxt-link>
@@ -162,7 +162,7 @@ export default {
     loggedin() {
       if (localStorage.getItem("status") != null) {
         console.log(this.$refs["loginbtn"]);
-        this.$router.replace("/products");
+        this.$router.replace("/");
       } else {
         this.$router.replace("/signIn");
       }
@@ -221,7 +221,7 @@ li a {
   /* margin-top: 5px; */
 }
 .input {
-  border: 1px solid #ddd;
+  border: 0;
   padding: 3px;
   border-radius: 5px;
   width: 400px;
@@ -266,7 +266,7 @@ li a {
   display: block;
 }
 .inputPhone {
-  border: 1px solid #ddd;
+  border: 0;
   padding: 3px;
   margin: 10px;
   border-radius: 5px;

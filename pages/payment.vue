@@ -5,16 +5,16 @@
         <h2>Checkout</h2>
         <h5>Order</h5>
         <ul class="order-list">
-          <li v-for="(product, i) in cart" :key="i">
-            <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
-            <h4>{{product.name}}</h4>
-            <h5>{{product.price}}</h5>
+          <li v-for="item in mylocalStorageCard" :key="item.id">
+            <div class="img" :style="{ backgroundImage: 'url(' + item.img_url + ')' }"></div>
+            <h4>{{item.name}}</h4>
+            <h5>{{item.price}}</h5>
           </li>
         </ul>
         <h5>Shipping</h5>
         <h4>30 $</h4>
         <h5 class="total">Total</h5>
-        <h1>{{totalPrice}} $</h1>
+        <h1>{{this.mylocalStorageTolalPrice}} $</h1>
       </div>
 
       <div id="payment" class="payment">
@@ -355,7 +355,7 @@
             />
           </p>
 
-          <button class="button-cta" title="Confirm your purchase" @click="lastStep">
+          <button class="button-cta" title="Confirm your purchase" @click="lastStep(), Confirm()">
             <span>PURCHASE</span>
           </button>
         </div>
@@ -389,16 +389,16 @@
       <h2>Checkout</h2>
       <h5>Order</h5>
       <ul class="order-list">
-        <li v-for="(product, i) in cart" :key="i">
-          <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
-          <h4>{{product.name}}</h4>
-          <h5>{{product.price}}</h5>
+        <li v-for="item in mylocalStorageCard" :key="item.id">
+          <div class="img" :style="{ backgroundImage: 'url(' + item.img_url + ')' }"></div>
+          <h4>{{item.name}}</h4>
+          <h5>{{item.price}}</h5>
         </li>
       </ul>
       <h5>Shipping</h5>
       <h4>30 $</h4>
       <h5 class="total">Total</h5>
-      <h1>{{totalPrice}} $</h1>
+      <h1>{{this.mylocalStorageTolalPrice}} $</h1>
     </div>
     <div class="paymentPhone">
       <h2>Payment</h2>
@@ -739,7 +739,7 @@
             />
           </p>
 
-          <button class="button-cta" title="Confirm your purchase" @click="lastStep">
+          <button class="button-cta" title="Confirm your purchase" @click="lastStep(), Confirm()">
             <span>PURCHASE</span>
           </button>
         </div>
@@ -749,6 +749,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -756,33 +757,45 @@ export default {
       shiping: 30,
       userCardnumber: "",
       cvcNumber: "",
-      ExpirationNmper: ""
+      ExpirationNmper: "",
+      mylocalStorageCard: [],
+      mylocalStorageQty: 0,
+      mylocalStorageTolalPrice: 0,
+      cardNuper: 0,
+      userCardnumber: 0,
+      cvcNumber: 0,
+      ExpirationNmper: 0
     };
+  },
+  mounted() {
+    //when i refresh  git my cart data from localStorage
+    this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
+    this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
+    this.mylocalStorageQty = localStorage.getItem("qty");
   },
   methods: {
     lastStep() {
       localStorage.setItem("userCardnumber", this.userCardnumber);
       localStorage.setItem("cvcNumber", this.cvcNumber);
       localStorage.setItem("ExpirationNmper", this.ExpirationNmper);
-      localStorage.getItem("cart");
+      // localStorage.getItem("cart");
       // localStorage.removeItem('cart')   we need to clear the localSttorge after the user cnfarm  hes buy
       this.$router.replace("/thankYou");
-    }
-  },
-  mounted() {
-    if (localStorage.getItem("cart") != null) {
-      this.cart = JSON.parse(localStorage.getItem("cart"));
-    }
-  },
-  computed: {
-    totalPrice() {
-      let total = 0;
-
-      for (let item of this.$store.state.products.cart) {
-        total += item.totalPrice;
-      }
-
-      return total + 30;
+    },
+    async Confirm() {
+      const orderAPI =
+        "https://pharmacy-databeas.herokuapp.com/User-purchases-cart";
+      const userorder = [];
+      userorder.push(
+        this.mylocalStorageCard,
+        this.mylocalStorageTolalPrice,
+        this.mylocalStorageQty,
+        this.ExpirationNmper,
+        this.cvcNumber,
+        this.userCardnumber
+      );
+      // console.log(userorder)
+      const res = await axios.post(orderAPI, userorder);
     }
   }
 };

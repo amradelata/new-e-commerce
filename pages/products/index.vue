@@ -1,10 +1,5 @@
 <template>
   <div class="top">
-    <!-- <ul>
-        <li v-for="item in todos">
-          {{item.title}}
-        </li>
-    </ul>-->
     <v-row no-gutters class="myprodactscards">
       <v-col v-for="product in products" :key="product.id" cols="12" sm="4">
         <v-card class="ma-2 myCard" outlined tile>
@@ -24,7 +19,6 @@
               <v-btn text>Show more</v-btn>
             </v-card-actions>
           </nuxt-link>
-          <!-- <button @click="fetchTodos(product.id)">click</button> -->
         </v-card>
       </v-col>
     </v-row>
@@ -32,26 +26,18 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 export default {
   scrollToTop: true,
   data() {
-    return {
-      alignment: "center",
-      justify: "center"
-    };
+    return {};
   },
   computed: {
     products() {
       return this.$store.state.products.products;
     }
-    // todos() {
-    //   return this.$store.state.products.todos;
-    // }
   },
   created() {
     this.$store.dispatch("products/fetchProducts");
-    // this.$store.dispatch('products/fetchTodos')
   }
 };
 </script>
