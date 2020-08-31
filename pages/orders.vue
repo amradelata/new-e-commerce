@@ -6,7 +6,7 @@
     <br />
     <br />
 
-    <div class="show" v-if="!$store.state.products.cart.length">
+    <div class="show" v-if="!$store.state.products.mylocalStorageCard.length">
       <i>there is no orders</i>
       <nuxt-link to="/products">
         <v-btn class="thankYouBtn">back to shopping</v-btn>
@@ -88,7 +88,7 @@ export default {
     this.cvcNumber = localStorage.getItem("cvcNumber");
     this.ExpirationNmper = localStorage.getItem("ExpirationNmper");
     this.userCardnumber = localStorage.getItem("userCardnumber");
-    this.totalPrice = localStorage.getItem("mytotalPrice");
+    this.totalPrice = localStorage.getItem("totalprice");
     this.username = localStorage.getItem("userfirstName");
   }
 };

@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- {{$store.state.products.countPlusLocalState}} -->
+
     <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
       <p class="is-size-3">all item/s {{getMyQty}}</p>
 
@@ -24,9 +25,12 @@
 
       <p class="is-size-3 has-text-success">{{ ' total price : ' + getMyTotalPrice }}$</p>
       <!-- <div class="is-size-5 flatshipping">Flat Shipping Credit 10 EGP</div> -->
-      <nuxt-link to="/payment">
-        <button class="button chekoutptn is-primary">Proceed to checkout</button>
-      </nuxt-link>
+
+      <button
+        v-if="getMyQty != 0 "
+        @click="goTooPayment()"
+        class="button chekoutptn is-primary"
+      >Proceed to checkout</button>
 
       <!-- <button @click="refreshpage()" class="button">update cart</button> -->
     </ul>
@@ -40,8 +44,7 @@ export default {
     return {
       mylocalStorageCard: [],
       mylocalStorageQty: 0,
-      mylocalStorageTolalPrice: 0,
-      numberInput: 0
+      mylocalStorageTolalPrice: 0
     };
   },
   computed: {
@@ -76,6 +79,9 @@ export default {
     mydelete(index) {
       this.$store.commit("products/sitmydelete", index);
       this.$store.commit("products/savelocalstorage");
+    },
+    goTooPayment() {
+      this.$store.commit("products/goTooPayment");
     }
   }
 };

@@ -1,5 +1,6 @@
 <template>
   <div class="top">
+    <h3 class="found">{{'products found '+this.prodactSearch.length}}</h3>
     <v-row no-gutters>
       <v-col v-for="product in prodactSearch" :key="product.id" cols="12" sm="4">
         <v-card class="ma-2 myCard" outlined tile>
@@ -61,6 +62,7 @@ export default {
         API + "/" + "?name_like=" + this.$route.query.test
       );
       this.prodactSearch = res.data;
+      console.log(this.prodactSearch.length);
     }
   }
 };
@@ -89,5 +91,8 @@ a {
   width: 100%;
   background-size: contain;
   background-position: center center;
+}
+.found {
+  text-align: center;
 }
 </style>

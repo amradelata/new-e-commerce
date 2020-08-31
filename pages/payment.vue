@@ -12,9 +12,9 @@
           </li>
         </ul>
         <h5>Shipping</h5>
-        <h4>30 $</h4>
+        <h4>10 $</h4>
         <h5 class="total">Total</h5>
-        <h1>{{this.mylocalStorageTolalPrice}} $</h1>
+        <h1>{{this.pricewithshipping}} $</h1>
       </div>
 
       <div id="payment" class="payment">
@@ -186,7 +186,7 @@
               type="text"
               id="cardnumber"
               name="cardnumber"
-              placeholder="1234 5678 9123 4567"
+              placeholder="card number"
               pattern="\d*"
               title="Card Number"
               v-model="userCardnumber"
@@ -241,7 +241,7 @@
               type="text"
               id="cardexpiration"
               name="cardexpiration"
-              placeholder="MM / YYYY"
+              placeholder="expiration"
               pattern="\d*"
               title="Card Expiration Date"
               v-model="ExpirationNmper"
@@ -396,9 +396,9 @@
         </li>
       </ul>
       <h5>Shipping</h5>
-      <h4>30 $</h4>
+      <h4>10 $</h4>
       <h5 class="total">Total</h5>
-      <h1>{{this.mylocalStorageTolalPrice}} $</h1>
+      <h1>{{this.pricewithshipping}} $</h1>
     </div>
     <div class="paymentPhone">
       <h2>Payment</h2>
@@ -570,7 +570,7 @@
               type="text"
               id="cardnumber"
               name="cardnumber"
-              placeholder="1234 5678 9123 4567"
+              placeholder="card number"
               pattern="\d*"
               title="Card Number"
               v-model="userCardnumber"
@@ -625,7 +625,7 @@
               type="text"
               id="cardexpiration"
               name="cardexpiration"
-              placeholder="MM / YYYY"
+              placeholder="expiration"
               pattern="\d*"
               title="Card Expiration Date"
               v-model="ExpirationNmper"
@@ -753,6 +753,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      restCart: [],
       cart: [],
       shiping: 30,
       userCardnumber: "",
@@ -761,10 +762,11 @@ export default {
       mylocalStorageCard: [],
       mylocalStorageQty: 0,
       mylocalStorageTolalPrice: 0,
-      cardNuper: 0,
-      userCardnumber: 0,
-      cvcNumber: 0,
-      ExpirationNmper: 0
+      cardNuper: "",
+      userCardnumber: "",
+      cvcNumber: "",
+      ExpirationNmper: "",
+      pricewithshipping: ""
     };
   },
   mounted() {
@@ -772,6 +774,7 @@ export default {
     this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
     this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
     this.mylocalStorageQty = localStorage.getItem("qty");
+    this.pricewithshipping = +this.mylocalStorageTolalPrice + +10;
   },
   methods: {
     lastStep() {
@@ -788,7 +791,7 @@ export default {
       const userorder = [];
       userorder.push(
         this.mylocalStorageCard,
-        this.mylocalStorageTolalPrice,
+        this.pricewithshipping,
         this.mylocalStorageQty,
         this.ExpirationNmper,
         this.cvcNumber,
@@ -796,6 +799,15 @@ export default {
       );
       // console.log(userorder)
       const res = await axios.post(orderAPI, userorder);
+      // rest my cart
+      let mystringCart = JSON.stringify(this.restCart); //convert  my array of opject to string to save it on localStorage
+      localStorage.setItem("cart", mystringCart);
+      localStorage.setItem("totalprice", 0);
+      localStorage.setItem("qty", 0);
+      localStorage.setItem("ExpirationNmper", 0);
+      localStorage.setItem("cvcNumber", 0);
+      localStorage.setItem("userCardnumber", 0);
+      this.$router.go();
     }
   }
 };

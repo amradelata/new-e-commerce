@@ -7,6 +7,7 @@
             <nuxt-link to="/" class="logo">
               <v-toolbar-title>NUXT</v-toolbar-title>
             </nuxt-link>
+
             <nuxt-link to="/products" class="navitem">
               <li>Shop</li>
             </nuxt-link>
@@ -47,20 +48,47 @@
                 @keyup.enter="searchRout"
               />
 
-              <li>
+              <li class="cartnav">
                 <nuxt-link to="/cart">
                   <v-icon>mdi-cart</v-icon>
-                  <!-- <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p> -->
+                  <span v-if="getMyQty != 0 " class="cartQty">{{getMyQty}}</span>
                 </nuxt-link>
               </li>
-              <li>
+              <!-- cart -->
+              <div class="mycart">
+                <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
+                  <p class>All items {{getMyQty}}</p>
+
+                  <li v-for="item in getmylocalStorageCard" :key="item.id">
+                    <div class="mycartitems">
+                      <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+                      <p class>{{' name : ' + item.name}}</p>
+                      <p class>{{ "price :"+item.price + ' $ '}}</p>
+                      {{"quantity : "+item.quantity}}
+                    </div>
+                  </li>
+                  <hr />
+                  <p class="TotalPrice">{{ ' Total Price : ' + getMyTotalPrice+ " $ " }}</p>
+                  <div class="mybtn">
+                    <nuxt-link to="/payment">
+                      <v-btn small color="primary">Checkout</v-btn>
+                    </nuxt-link>
+                    <nuxt-link to="/cart">
+                      <v-btn small color="primary">View Cart</v-btn>
+                    </nuxt-link>
+                  </div>
+                </ul>
+              </div>
+              <!-- cart -->
+
+              <!-- <li>
                 <div class="li" v-if="this.userLog != null">
                   <button @click="loggedin" class="loginbtn" ref="loginbtn">hi amr</button>
                 </div>
                 <div class="li" v-else>
                   <button @click="loggedin" class="loginbtn" ref="loginbtn">Sign In</button>
                 </div>
-              </li>
+              </li>-->
             </ul>
           </v-toolbar>
         </div>
@@ -88,21 +116,15 @@
                 ref="loginbtn"
               >{{'Hi ' + this.userName}}</button>
             </div>
-            <div class="li" v-else>
+            <!-- <div class="li" v-else>
               <button @click="loggedin(), togelPhoneNave()" class="loginbtn" ref="loginbtn">Sign In</button>
-            </div>
+            </div>-->
           </li>
           <li>
-            <input
-              class="inputPhone"
-              type="text"
-              placeholder="search"
-              v-model="searchVale"
-              @keyup.enter="searchRout"
-            />
+            <input class="inputPhone" type="text" placeholder="search" v-model="searchVale" />
           </li>
           <li>
-            <button @click="searchRout">search</button>
+            <v-btn @click="searchRout(), togelPhoneNave()" small color="primary">search</v-btn>
           </li>
           <!-- <li @click="togelPhoneNave()">
             <nuxt-link to="/products">products</nuxt-link>
@@ -132,12 +154,10 @@
             <nuxt-link to="/coat">coat</nuxt-link>
           </li>
 
-          <li @click="togelPhoneNave()">
-            <nuxt-link to="/cart">
-              <v-icon>mdi-cart</v-icon>cart
-              <!-- <p v-if="mycartCount > 0" class="cercil">{{mycartCount}}</p> -->
-            </nuxt-link>
-          </li>
+          <nuxt-link to="/cart" class="cartQtyiconphone">
+            <v-icon>mdi-cart</v-icon>
+            <span v-if="getMyQty != null && getMyQty != 0   " class="cartQty">{{getMyQty}}</span>
+          </nuxt-link>
         </ul>
       </div>
     </div>
@@ -152,11 +172,21 @@ export default {
     return {
       searchVale: "",
       prodactSearch: [],
-      mycartCount: "",
       localStorage: {},
       userLog: localStorage.getItem("status"),
       userName: localStorage.getItem("userfirstName")
     };
+  },
+  computed: {
+    getMyQty() {
+      return this.$store.state.products.mylocalStorageQty;
+    },
+    getMyTotalPrice() {
+      return this.$store.state.products.mylocalStorageTolalPrice;
+    },
+    getmylocalStorageCard() {
+      return this.$store.state.products.mylocalStorageCard;
+    }
   },
   methods: {
     loggedin() {
@@ -175,24 +205,96 @@ export default {
     //pass this.searchVale to link and in search component
     searchRout() {
       this.$router.push("/search?test=" + this.searchVale);
-      // this.searchVale = "";
+      this.searchVale = "";
       // window.location.reload(true); ////to relod the page in js and Firefox
       // this.$router.go(); //to relod the page in vue
     }
   },
   mounted() {
-    this.mycartCount = JSON.parse(localStorage.getItem("cartCount"));
-    console.log(this.mycartCount);
+    // this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
+    // this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
+    // this.mylocalStorageQty = localStorage.getItem("qty");
   }
 };
 </script>
 <style scoped>
+.TotalPrice {
+  color: #00cec9;
+  font-size: 35px;
+}
+.mycartitems {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 10px 0;
+}
+ul {
+  padding-left: 0;
+}
+
+.cartnav:hover ~ .mycart {
+  display: inline-block;
+  /* background: #ff00; */
+}
+.cart {
+  background: #000;
+}
+.mybtn button {
+  width: 100%;
+  margin: 10px 0;
+}
+.mycart {
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 20px;
+  position: absolute;
+  z-index: 99999;
+  background: #ffffff;
+  top: 48px;
+  right: 0;
+  display: none;
+}
+.mycart:hover {
+  display: inline-block;
+}
+
+.cardimgimg {
+  height: 50px;
+  background-size: contain;
+  background-position: center center;
+  margin-bottom: 10px;
+}
+.navbar-burger {
+  margin-right: auto;
+  margin-left: 0;
+}
 .navitem {
   font-size: 15px;
   text-transform: uppercase;
   font-weight: 300;
   padding: 10px;
   color: #000;
+}
+.cartQty {
+  position: absolute;
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 17px;
+  color: #fff;
+  font-size: 12px;
+  top: 8px;
+  /* right: 5px; */
+  background: #ff424e;
+  color: #fff;
+}
+
+.cartQtyiconphone {
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  color: #fff;
+  top: 15px;
 }
 .logo {
   color: #000;
@@ -221,9 +323,9 @@ li a {
   /* margin-top: 5px; */
 }
 .input {
-  border: 0;
+  border-bottom: 1px solid #000;
   padding: 3px;
-  border-radius: 5px;
+  border-radius: 3px;
   width: 400px;
   outline: none;
 }
@@ -254,7 +356,7 @@ li a {
 .navBody {
   overflow: hidden;
   /* padding: 35px; */
-  background: ;
+  /* background: ; */
   text-align: center;
   transition: all 0.6s ease-in-out;
   height: 0;
@@ -266,10 +368,10 @@ li a {
   display: block;
 }
 .inputPhone {
-  border: 0;
+  border-bottom: 1px solid #000;
   padding: 3px;
   margin: 10px;
-  border-radius: 5px;
+  border-radius: 3px;
   width: 90%;
   outline: none;
 }
