@@ -3,11 +3,16 @@
     <adminNav />
     <div>
       <div class="users margintop">
-        <div class="user" v-for="(user, i) in users" :key="i">
+        <div class="user" v-for="(user, index) in users" :key="user.id">
           <div>{{user.id}}</div>
           <div>{{user.email}}</div>
           <div>{{user.password}}</div>
-          <button @click="remove(index = user.id)" class="danger" ref="delete" id="delete">delete</button>
+          <button
+            @click="removeuser(index = user.id)"
+            class="danger"
+            ref="delete"
+            id="delete"
+          >delete</button>
         </div>
       </div>
     </div>
@@ -16,8 +21,9 @@
 
 <script>
 import adminNav from "../components/adminNav";
-import axios from "axios";
 const API = "https://vue-e-commerce-databse.herokuapp.com/users";
+import axios from "axios";
+
 export default {
   components: {
     adminNav
@@ -32,22 +38,19 @@ export default {
     };
   },
   data() {
-    return {};
+    return {
+      users: []
+    };
   },
-  computed: {
-    users() {
-      return this.$store.state.products.users;
-    }
-  },
-  created() {
-    this.$store.dispatch("products/fetchUsers");
+  async created() {
+    const response = await axios.get(API);
+    this.users = response.data;
   },
   methods: {
-    async remove(index) {
+    async removeuser(index) {
       const res = await axios.delete(API + "/" + index);
       const dele = await axios.get(API);
-      this.products = dele.data;
-      console.log(index);
+      this.users = dele.data;
     }
   }
 };

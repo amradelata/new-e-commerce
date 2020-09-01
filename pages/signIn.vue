@@ -49,7 +49,7 @@ export default {
       localStorage.setItem("userlastName", this.lastName);
       localStorage.setItem("useremail", this.email);
       localStorage.setItem("userpassword", this.password);
-      this.$router.replace("/");
+      this.$router.replace("/payment");
       // this.password = ''
       // this.email = ''
       // this.lastName = ''

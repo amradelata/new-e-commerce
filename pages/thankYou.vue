@@ -23,7 +23,7 @@
 .thankYoucontent {
   text-align: center;
   position: absolute;
-  margin-top: 360px;
+  margin-top: 460px;
   /* top: 50%; */
   left: 50%;
   transform: translate(-50%, -50%);
@@ -38,7 +38,7 @@
 
 @media screen and (max-width: 768px) {
   .thankYoucontent {
-    margin-top: 200px;
+    margin-top: 300px;
   }
   .thankYoucontent img {
     width: 100vw;

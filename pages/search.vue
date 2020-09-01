@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <h3 class="found">{{'products found '+this.prodactSearch.length}}</h3>
+    <h3 class="found">{{this.prodactSearch.length+' - products found '}}</h3>
     <v-row no-gutters>
       <v-col v-for="product in prodactSearch" :key="product.id" cols="12" sm="4">
         <v-card class="ma-2 myCard" outlined tile>

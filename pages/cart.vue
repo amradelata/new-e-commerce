@@ -1,41 +1,48 @@
 <template>
-  <div>
-    <!-- {{$store.state.products.countPlusLocalState}} -->
-
-    <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
-      <p class="is-size-3">all item/s {{getMyQty}}</p>
-
-      <li class="cart" v-for="(item,index) in getmylocalStorageCard" :key="item.id">
-        <div class="card">
+  <div class="cartpage">
+    <div class="asd">
+      <!-- <h2 class>all item/s {{getMyQty}}</h2> -->
+      <h2 class="head">Shopping Cart</h2>
+      <hr />
+      <div class="supheds">
+        <h4>Product Details</h4>
+        <h4>Quantity</h4>
+        <h4>Price</h4>
+      </div>
+      <div class="carts" v-for="(item,index) in getmylocalStorageCard" :key="item.id">
+        <div class="cart">
+          <p class>{{item.name}}</p>
           <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
-          <p class="is-size-6">{{item.name}}</p>
-          <p class="is-size-6 has-text-success">{{item.price}}$</p>
-          {{item.quantity}}
+        </div>
+        <div class="cart">
+          <p class="quantity">{{"quantity : "+item.quantity}}</p>
           <div class="cartbuttons">
-            <button class="cartbutton button is-danger" @click="mydelete(index)">delete</button>
-            <button
-              v-if="item.quantity"
-              class="cartbutton button is-light"
-              @click="removefromquantty(index)"
-            >-</button>
-            <button class="cartbutton button is-light" @click="addtoquantty(index)">+</button>
+            <v-btn @click="mydelete(index)">delete</v-btn>
+            <v-btn v-if="item.quantity" @click="removefromquantty(index)">-</v-btn>
+            <v-btn @click="addtoquantty(index)">+</v-btn>
           </div>
         </div>
-      </li>
-
-      <p class="is-size-3 has-text-success">{{ ' total price : ' + getMyTotalPrice }}$</p>
-      <!-- <div class="is-size-5 flatshipping">Flat Shipping Credit 10 EGP</div> -->
-
-      <button
-        v-if="getMyQty != 0 "
-        @click="goTooPayment()"
-        class="button chekoutptn is-primary"
-      >Proceed to checkout</button>
-
-      <!-- <button @click="refreshpage()" class="button">update cart</button> -->
-    </ul>
+        <div class="cart">
+          <p class="price">{{"price : "+item.price}}$</p>
+        </div>
+      </div>
+      <div class="totalprice">
+        <p>{{ ' total price : ' + getMyTotalPrice }}$</p>
+        <!-- <v-btn v-if="getMyQty != 0 " @click="goTooPayment()">Proceed to checkout</v-btn> -->
+        <v-btn
+          class="ma-2"
+          tile
+          outlined
+          color="success"
+          v-if="getMyQty != 0 "
+          @click="goTooPayment()"
+        >
+          Proceed to checkout
+          <v-icon right>mdi-arrow-right</v-icon>
+        </v-btn>
+      </div>
+    </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -86,77 +93,75 @@ export default {
   }
 };
 </script>
-
 <style scoped>
-.content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.cartpage {
+  padding: 0 50px;
+  background: #f1f2f6;
+  /* background: #000; */
+  margin-top: 0;
+  /* padding-top: 50px; */
+  height: 100%;
 }
-.content span {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 300%);
-  width: 100%;
+
+.carts {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background: #fff;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+  /* border: 1px solid #000; */
+  margin: 20px 0;
+}
+.carts > div {
+  /* border: 1px solid #000; */
   text-align: center;
 }
-
-/* how to center text in html vertically horizontally with display flex */
-.dadCrds,
-.totalPrice {
-  padding-top: 100px;
+.supheds {
+  margin-top: 20px;
   display: flex;
-  /* align-items: center;
-  justify-content: center;
-  text-align: center; */
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
-.totalPrice h2 {
-  margin: 20px;
-}
-.totalPrice .cartbtn {
-  margin: 35px;
+.head {
+  padding: 35px 0;
 }
 
 .cardimgimg {
-  height: 100px;
-  background-size: contain;
+  margin: auto;
+  height: 200px;
+  width: 150px;
+  background-size: cover;
   background-position: center center;
-  margin-bottom: 35px;
 }
-.supCard {
-  flex-basis: calc(33.333% - 20px);
-  display: inline-block;
-  margin: 10px;
+.totalprice {
+  padding: 35px 0;
 }
-.supCard span {
-  margin: 0 35px;
+.totalprice p {
+  font-size: 30px;
+  color: #2d3436;
 }
-.hied {
-  /* text-align: center; */
-}
-.hied button,
-.hied i {
-  margin: 20px;
-}
-.hied img {
-  width: 100%;
-  height: 100%;
-}
-.card {
-  border: 1px solid #ccc;
-  text-align: center;
-}
-@media screen and (max-width: 768px) {
-  .supCard {
-    flex-basis: calc(100% - 20px);
+@media screen and (max-width: 500px) {
+  .supheds {
+    display: none;
   }
-  .supCard span {
-    margin: 0;
+  .carts {
     display: block;
-    margin: 20px 0;
+    padding: 15px;
+    margin: 35px 0;
+  }
+  .price,
+  .quantity {
+    margin-top: 20px;
+  }
+  .cartpage {
+    padding: 0 20px;
+  }
+  .totalprice {
+    text-align: center;
+    padding: 35px;
   }
 }
 </style>
+

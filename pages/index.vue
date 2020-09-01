@@ -124,7 +124,7 @@ export default {
 
 <style scoped>
 .samstyle {
-  margin-top: -50px;
+  /* margin-top: -50px; */
   width: 100%;
   height: 50vh;
   background-size: cover;

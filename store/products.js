@@ -107,17 +107,15 @@ export const mutations = {
       }
       // console.log(state.mylocalStorageCard,myclickdObject,state.mylocalStorageQty,state.mylocalStorageTolalPrice);
     },
-        sitmydelete(state,index) {
+      sitmydelete(state,index) {
       const myclickdObject =state.mylocalStorageCard[index]
       state.mylocalStorageCard.splice(index, 1);
       state.mylocalStorageTolalPrice =
-        +state.mylocalStorageTolalPrice +
-        -myclickdObject.price * myclickdObject.quantity;
+      +state.mylocalStorageTolalPrice +
+      -myclickdObject.price * myclickdObject.quantity;
       state.mylocalStorageQty =
-        +state.mylocalStorageQty + -myclickdObject.quantity;
-      
-      
-    },
+      +state.mylocalStorageQty + -myclickdObject.quantity;
+      },
     
     savelocalstorage(state) {
       // localStorage
@@ -127,8 +125,9 @@ export const mutations = {
       localStorage.setItem("cart", mystringCart); //set cart string
       // // localStorage
     },
+//cart
 
-
+   
 };
  
 //fetchdata
@@ -142,11 +141,11 @@ async fetchSinglePage({commit}, id){
   const response = await axios.get(`https://vue-e-commerce-databse.herokuapp.com/products/${id}`)
   commit('setSinglePage',response.data,id)
 },
-async fetchUsers({commit}){
-  const response = await axios.get('https://vue-e-commerce-databse.herokuapp.com/users')
+// async fetchUsers({commit}){
+//   const response = await axios.get('https://vue-e-commerce-databse.herokuapp.com/users')
 
-  commit('setUsers',response.data)
-}
+//   commit('setUsers',response.data)
+// }
 };
 
 const getters = {

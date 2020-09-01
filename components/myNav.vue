@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="nav mynav">
+    <div>
       <v-card color="grey lighten-4" flat tile class="child-flex">
         <div class="navDiskTop">
           <v-toolbar dense>
@@ -10,6 +10,9 @@
 
             <nuxt-link to="/products" class="navitem">
               <li>Shop</li>
+            </nuxt-link>
+            <nuxt-link to="/admin" class="navitem">
+              <li>admin</li>
             </nuxt-link>
             <!-- <nuxt-link to="/products" class="navitem">
               <li>products</li>
@@ -51,11 +54,11 @@
               <li class="cartnav">
                 <nuxt-link to="/cart">
                   <v-icon>mdi-cart</v-icon>
-                  <span v-if="getMyQty != 0 " class="cartQty">{{getMyQty}}</span>
+                  <span v-if="getMyQty != 0 && getMyQty != null" class="cartQty">{{getMyQty}}</span>
                 </nuxt-link>
               </li>
               <!-- cart -->
-              <div class="mycart">
+              <div class="myNavcart">
                 <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
                   <p class>All items {{getMyQty}}</p>
 
@@ -109,18 +112,6 @@
       <div class="navBody" ref="changenavBody">
         <ul>
           <li>
-            <div class="li" v-if="this.userLog != null">
-              <button
-                @click="loggedin(), togelPhoneNave()"
-                class="loginbtn"
-                ref="loginbtn"
-              >{{'Hi ' + this.userName}}</button>
-            </div>
-            <!-- <div class="li" v-else>
-              <button @click="loggedin(), togelPhoneNave()" class="loginbtn" ref="loginbtn">Sign In</button>
-            </div>-->
-          </li>
-          <li>
             <input class="inputPhone" type="text" placeholder="search" v-model="searchVale" />
           </li>
           <li>
@@ -131,6 +122,9 @@
           </li>-->
           <li @click="togelPhoneNave()">
             <nuxt-link to="/products">Shop</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
+            <nuxt-link to="/admin">admin</nuxt-link>
           </li>
           <li @click="togelPhoneNave()">
             <nuxt-link to="/shoes">shoes</nuxt-link>
@@ -219,20 +213,24 @@ export default {
 </script>
 <style scoped>
 .TotalPrice {
-  color: #00cec9;
+  /* color: #00cec9; */
   font-size: 35px;
 }
 .mycartitems {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 10px 0;
+  /* background: #4051b5;
+  color: #f5f5f5; */
 }
 ul {
   padding-left: 0;
 }
 
-.cartnav:hover ~ .mycart {
+.cartnav:hover ~ .myNavcart {
   display: inline-block;
-  /* background: #ff00; */
+}
+.myNavcart:hover {
+  display: inline-block;
 }
 .cart {
   background: #000;
@@ -241,20 +239,17 @@ ul {
   width: 100%;
   margin: 10px 0;
 }
-.mycart {
+.myNavcart {
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 20px;
   position: absolute;
   z-index: 99999;
-  background: #ffffff;
+  background: #fff;
   top: 48px;
   right: 0;
   display: none;
-}
-.mycart:hover {
-  display: inline-block;
 }
 
 .cardimgimg {
@@ -288,7 +283,9 @@ ul {
   background: #ff424e;
   color: #fff;
 }
-
+.v-application p {
+  margin-bottom: 0;
+}
 .cartQtyiconphone {
   position: absolute;
   height: 22px;
@@ -323,14 +320,14 @@ li a {
   /* margin-top: 5px; */
 }
 .input {
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ccc;
   padding: 3px;
   border-radius: 3px;
   width: 400px;
   outline: none;
 }
 .child-flex {
-  position: fixed;
+  /* position: fixed; */
   right: 0;
   left: 0;
   top: 0;
@@ -361,14 +358,12 @@ li a {
   transition: all 0.6s ease-in-out;
   height: 0;
 }
-.changenavBody {
-  height: 100vh;
-}
+
 .navBody li {
   display: block;
 }
 .inputPhone {
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ccc;
   padding: 3px;
   margin: 10px;
   border-radius: 3px;
@@ -430,7 +425,7 @@ li a {
     display: none;
   }
   .changenavBody {
-    /* height: 110vh; */
+    height: 85vh;
   }
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class="contenir">
     <div class="singleproduct">
       <div class="halfdev">
-        <h1>{{single.name}}</h1>
         <div class="singlimg" :style="{backgroundImage: 'url('+single.img_url+')'}"></div>
       </div>
       <div class="halfdev">
         <div class="singlecontent">
+          <h1>{{single.name}}</h1>
           <p>{{single.description}}</p>
-          <span>{{single.price}}</span>
+          <span class="price">{{single.price + ' $'}}</span>
           <nuxt-link :to="'/cart'">
-            <button @click="addToCart(i = single.id)">addto cart</button>
+            <v-btn class="btn" @click="addToCart(i = single.id)">addto cart</v-btn>
           </nuxt-link>
         </div>
       </div>
@@ -53,53 +53,54 @@ export default {
 </script>
 
 <style scoped>
-.singleproduct {
-  display: flex;
-  flex-wrap: wrap;
+.btn {
+  margin: 50px 0 !important;
 }
-.halfdev {
-  flex-basis: calc(50% - 20px);
-  display: inline-block;
-  margin: 10px;
-  overflow: hidden;
+.contenir {
+  padding: 0 100px;
+}
+.price {
+  font-size: 35px;
+  color: #3ace40;
 }
 .halfdev h1 {
-  margin-top: 50px;
-  margin-left: 119px;
+  padding-top: 100px;
 }
-.halfdev span {
-  display: block;
-  margin: 35px 0;
-}
-.halfdev button {
-  border: 1px solid #ccc;
-  padding: 20px;
-}
-.singlecontent {
-  padding: 300px 35px;
+.singleproduct {
+  /* border: 1px solid #000; */
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  height: 80vh;
 }
 .singlimg {
+  /* border: 1px solid #000; */
   height: 500px;
+  width: 700px;
+  margin-top: 50px;
   background-size: contain;
-  background-position: center center;
 }
+
 @media screen and (max-width: 768px) {
-  .singlecontent {
-    padding: 35px 0;
-  }
-  .halfdev {
-    flex-basis: calc(100% - 20px);
-  }
-  .singlimg {
-    height: 228px;
-  }
   .singleproduct {
-    margin-top: 100px;
+    display: block;
     text-align: center;
   }
-  .halfdev h1 {
+  .singlimg {
+    width: 100%;
     margin-top: 0;
-    margin-left: 0;
+    margin-bottom: 35px;
+  }
+  .halfdev h1 {
+    padding-top: 0;
+  }
+  .contenir {
+    padding: 0 15px;
+  }
+  .price {
+    font-size: 35px;
+    display: block;
   }
 }
 </style>

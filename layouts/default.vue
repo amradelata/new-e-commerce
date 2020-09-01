@@ -2,7 +2,7 @@
   <v-app dark>
     <myNav />
     <!-- <mypopup /> -->
-    <div class="mybody">
+    <div>
       <nuxt />
     </div>
 
@@ -51,12 +51,12 @@ export default {
 </script>
 
 <style scoped>
-.mybody {
+/* .mybody {
   margin-top: 100px;
 }
 @media screen and (max-width: 768px) {
   .mybody {
     margin-top: 0;
   }
-}
+} */
 </style>
