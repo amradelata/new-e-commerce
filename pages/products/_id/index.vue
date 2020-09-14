@@ -56,12 +56,16 @@ export default {
 .btn {
   margin: 50px 0 !important;
 }
+a {
+  text-decoration: none;
+}
 .contenir {
   padding: 0 100px;
 }
 .price {
   font-size: 35px;
   color: #3ace40;
+  display: block;
 }
 .halfdev h1 {
   padding-top: 100px;

@@ -1,101 +1,55 @@
 <template>
   <div>
-    <div>
-      <v-card color="grey lighten-4" flat tile class="child-flex">
-        <div class="navDiskTop">
-          <v-toolbar dense>
-            <nuxt-link to="/" class="logo">
-              <v-toolbar-title>NUXT</v-toolbar-title>
+    <div class="navDiskTop">
+      <ul>
+        <li>
+          <nuxt-link to="/">Home</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/products">SHOP</nuxt-link>
+        </li>
+        <ul class="right0">
+          <li>
+            <input
+              class="input"
+              type="text"
+              placeholder="search"
+              v-model="searchVale"
+              @keyup.enter="searchRout"
+            />
+          </li>
+          <li class="cartnav">
+            <nuxt-link to="/cart">
+              <v-icon>mdi-cart</v-icon>
+              <span v-if="getMyQty != 0 && getMyQty != null" class="cartQty">{{getMyQty}}</span>
             </nuxt-link>
+          </li>
+          <div class="myNavcart">
+            <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
+              <p class>All items {{getMyQty}}</p>
 
-            <nuxt-link to="/products" class="navitem">
-              <li>Shop</li>
-            </nuxt-link>
-            <nuxt-link to="/admin" class="navitem">
-              <li>admin</li>
-            </nuxt-link>
-            <!-- <nuxt-link to="/products" class="navitem">
-              <li>products</li>
-            </nuxt-link>-->
-            <nuxt-link to="/shoes" class="navitem">
-              <li>Shoes</li>
-            </nuxt-link>
-            <nuxt-link to="/tShirt" class="navitem">
-              <li>T-shirt</li>
-            </nuxt-link>
-            <nuxt-link to="/shirt" class="navitem">
-              <li>Shirt</li>
-            </nuxt-link>
-            <nuxt-link to="/jacket" class="navitem">
-              <li>Jacket</li>
-            </nuxt-link>
-            <nuxt-link to="/suit" class="navitem">
-              <li>Suit</li>
-            </nuxt-link>
-            <nuxt-link to="/blazer" class="navitem">
-              <li>Blazer</li>
-            </nuxt-link>
-            <nuxt-link to="/pants" class="navitem">
-              <li>Pants</li>
-            </nuxt-link>
-            <nuxt-link to="/coat" class="navitem">
-              <li>Coat</li>
-            </nuxt-link>
-            <div class="flex-grow-1"></div>
-            <ul class="right0">
-              <input
-                class="input"
-                type="text"
-                placeholder="search"
-                v-model="searchVale"
-                @keyup.enter="searchRout"
-              />
-
-              <li class="cartnav">
-                <nuxt-link to="/cart">
-                  <v-icon>mdi-cart</v-icon>
-                  <span v-if="getMyQty != 0 && getMyQty != null" class="cartQty">{{getMyQty}}</span>
-                </nuxt-link>
+              <li v-for="item in getmylocalStorageCard" :key="item.id">
+                <div class="mycartitems">
+                  <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+                  <p class>{{' name : ' + item.name}}</p>
+                  <p class>{{ "price :"+item.price + ' $ '}}</p>
+                  {{"quantity : "+item.quantity}}
+                </div>
               </li>
-              <!-- cart -->
-              <div class="myNavcart">
-                <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
-                  <p class>All items {{getMyQty}}</p>
-
-                  <li v-for="item in getmylocalStorageCard" :key="item.id">
-                    <div class="mycartitems">
-                      <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
-                      <p class>{{' name : ' + item.name}}</p>
-                      <p class>{{ "price :"+item.price + ' $ '}}</p>
-                      {{"quantity : "+item.quantity}}
-                    </div>
-                  </li>
-                  <hr />
-                  <p class="TotalPrice">{{ ' Total Price : ' + getMyTotalPrice+ " $ " }}</p>
-                  <div class="mybtn">
-                    <nuxt-link to="/payment">
-                      <v-btn small color="primary">Checkout</v-btn>
-                    </nuxt-link>
-                    <nuxt-link to="/cart">
-                      <v-btn small color="primary">View Cart</v-btn>
-                    </nuxt-link>
-                  </div>
-                </ul>
+              <hr />
+              <p class="TotalPrice">{{ ' Total Price : ' + getMyTotalPrice+ " $ " }}</p>
+              <div class="mybtn">
+                <nuxt-link to="/payment">
+                  <v-btn small color="primary">Checkout</v-btn>
+                </nuxt-link>
+                <nuxt-link to="/cart">
+                  <v-btn small color="primary">View Cart</v-btn>
+                </nuxt-link>
               </div>
-              <!-- cart -->
-
-              <!-- <li>
-                <div class="li" v-if="this.userLog != null">
-                  <button @click="loggedin" class="loginbtn" ref="loginbtn">hi amr</button>
-                </div>
-                <div class="li" v-else>
-                  <button @click="loggedin" class="loginbtn" ref="loginbtn">Sign In</button>
-                </div>
-              </li>-->
             </ul>
-          </v-toolbar>
-        </div>
-      </v-card>
+          </div>
+        </ul>
+      </ul>
     </div>
     <div class="navPhone">
       <nuxt-link to="/">
@@ -212,6 +166,18 @@ export default {
 };
 </script>
 <style scoped>
+.navDiskTop {
+  /* display: flex;
+
+  justify-content: flex-end;
+  justify-items: flex-end; */
+
+  /* border: 1px solid red; */
+}
+.navDiskTop li {
+  /* padding: 0 100px; */
+  /* border: 1px solid red; */
+}
 .TotalPrice {
   /* color: #00cec9; */
   font-size: 35px;
@@ -225,13 +191,10 @@ export default {
 ul {
   padding-left: 0;
 }
+.cartnav {
+  /* border: 1px solid #000; */
+}
 
-.cartnav:hover ~ .myNavcart {
-  display: inline-block;
-}
-.myNavcart:hover {
-  display: inline-block;
-}
 .cart {
   background: #000;
 }
@@ -250,6 +213,12 @@ ul {
   top: 48px;
   right: 0;
   display: none;
+}
+.cartnav:hover ~ .myNavcart {
+  display: inline-block;
+}
+.myNavcart:hover {
+  display: inline-block;
 }
 
 .cardimgimg {
@@ -316,14 +285,16 @@ li a {
 }
 .right0 {
   position: absolute;
-  right: 0;
+  right: 10px;
+  top: 0;
+
   /* margin-top: 5px; */
 }
 .input {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #6c63ff;
   padding: 3px;
-  border-radius: 3px;
-  width: 400px;
+  /* border-radius: 3px; */
+  /* width: 400px; */
   outline: none;
 }
 .child-flex {

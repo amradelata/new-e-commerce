@@ -11,15 +11,24 @@
       </div>
       <div class="carts" v-for="(item,index) in getmylocalStorageCard" :key="item.id">
         <div class="cart">
-          <p class>{{item.name}}</p>
           <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+          <p class>{{item.name}}</p>
         </div>
         <div class="cart">
           <p class="quantity">{{"quantity : "+item.quantity}}</p>
           <div class="cartbuttons">
-            <v-btn @click="mydelete(index)">delete</v-btn>
-            <v-btn v-if="item.quantity" @click="removefromquantty(index)">-</v-btn>
-            <v-btn @click="addtoquantty(index)">+</v-btn>
+            <!-- <v-btn @click="mydelete(index)">delete</v-btn> -->
+            <v-btn @click="mydelete(index)" class="ma-2" tile outlined color="error">
+              <v-icon left>mdi-delete</v-icon>delete
+            </v-btn>
+            <v-btn @click="removefromquantty(index)" class="ma-2" tile outlined color="warning">
+              <v-icon left>mdi-pencil</v-icon>-
+            </v-btn>
+            <!-- <v-btn v-if="item.quantity" @click="removefromquantty(index)">-</v-btn> -->
+            <!-- <v-btn @click="addtoquantty(index)">+</v-btn> -->
+            <v-btn @click="addtoquantty(index)" class="ma-2" tile outlined color="warning">
+              <v-icon left>mdi-pencil</v-icon>+
+            </v-btn>
           </div>
         </div>
         <div class="cart">
@@ -96,7 +105,7 @@ export default {
 <style scoped>
 .cartpage {
   padding: 0 50px;
-  background: #f1f2f6;
+  background: #f5f6fa;
   /* background: #000; */
   margin-top: 0;
   /* padding-top: 50px; */
