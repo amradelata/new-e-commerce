@@ -63,7 +63,7 @@ export default {
 .img {
   height: 200px;
   width: 200px;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
   margin-right: 35px;
 }

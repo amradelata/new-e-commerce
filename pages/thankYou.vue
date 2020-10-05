@@ -1,15 +1,11 @@
 <template>
   <div class="thankYou">
     <div class="thankYoucontent">
-      <img
-        class="thankYouImg"
-        src="https://cdn.dribbble.com/users/637635/screenshots/6065726/800_600_2.gif"
-        alt
-      />
+      <div class="img"></div>
+      <p class="expect">Expect delivery from 2 to 3 days work</p>
       <nuxt-link to="/products">
         <v-btn class="thankYouBtn">back to shopping</v-btn>
       </nuxt-link>
-      <p class="expect">Expect delivery from 2 to 3 days work</p>
     </div>
   </div>
 </template>
@@ -18,31 +14,32 @@
 <style scoped>
 .thankYou {
   position: relative;
-  height: 100vh;
-}
-.thankYoucontent {
-  text-align: center;
-  position: absolute;
-  margin-top: 460px;
-  /* top: 50%; */
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.thankYoucontent img {
-  width: 100%;
-  /* height: 100vh; */
-}
-.thankYouBtn {
-  margin: 35px 0;
 }
 
-@media screen and (max-width: 768px) {
-  .thankYoucontent {
-    margin-top: 300px;
-  }
-  .thankYoucontent img {
-    width: 100vw;
-  }
+.thankYoucontent {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 20%);
+}
+.img {
+  width: 300px;
+  height: 300px;
+  background-image: url("https://cdn.dribbble.com/users/637635/screenshots/6065726/800_600_2.gif");
+  background-size: cover;
+  background-position: center center;
+  margin: 20px 0;
+}
+.expect {
+  margin: 20px 0;
+}
+button {
+  display: block;
+  text-align: center;
+  margin: auto;
+}
+a {
+  text-decoration: none;
 }
 </style>
 

@@ -1,14 +1,14 @@
 <template>
   <div class="top container">
-    <!-- <nuxt-link to="/signIn">sign in</nuxt-link> -->
-    <!-- <nuxt-link to="/logIn">log in</nuxt-link> -->
+    <nuxt-link to="/signIn">sign in</nuxt-link>
+    <nuxt-link to="/logIn">log in</nuxt-link>
     <v-card-text>
       <v-form class="px-3" ref="form">
         <v-text-field v-model="firstName" label="first name" :rules="nameRules"></v-text-field>
         <v-text-field v-model="lastName" label="last name" :rules="nameRules"></v-text-field>
         <v-text-field v-model="email" label="email" :rules="emailRules"></v-text-field>
         <v-text-field v-model="password" label="password" :rules="nameRules"></v-text-field>
-        <v-btn @click="submit">SIGN IN</v-btn>
+        <v-btn @click="submit()">SIGN IN</v-btn>
       </v-form>
     </v-card-text>
   </div>
@@ -37,7 +37,9 @@ export default {
   methods: {
     async submit() {
       // console.log(this.password,this.email,this.lastName,this.firstName)
-
+      const nameres = await axios.get(
+        `https://vue-e-commerce-databse.herokuapp.com/users/?firstName=${this.firstName}`
+      );
       const res = await axios.post(usersArray, {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -49,11 +51,19 @@ export default {
       localStorage.setItem("userlastName", this.lastName);
       localStorage.setItem("useremail", this.email);
       localStorage.setItem("userpassword", this.password);
+
+      if (
+        (this.firstName === "",
+        this.lastName === "",
+        this.email === "",
+        this.password === "")
+      ) {
+        return;
+      } else if (nameres.data.length > 0) {
+        alert("This name already exists");
+        return;
+      }
       this.$router.replace("/payment");
-      // this.password = ''
-      // this.email = ''
-      // this.lastName = ''
-      // this.firstName = ''
     }
   }
 };

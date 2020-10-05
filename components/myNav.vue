@@ -8,6 +8,9 @@
         <li>
           <nuxt-link to="/products">SHOP</nuxt-link>
         </li>
+        <li>
+          <nuxt-link to="/admin">ADMIN</nuxt-link>
+        </li>
         <ul class="right0">
           <li>
             <input
@@ -24,22 +27,22 @@
               <span v-if="getMyQty != 0 && getMyQty != null" class="cartQty">{{getMyQty}}</span>
             </nuxt-link>
           </li>
-          <div class="myNavcart">
-            <ul class="carts" v-if="getmylocalStorageCard != null" ref="carts">
+          <div class="myNavcart" v-if="getMyQty != 0 && getMyQty != null">
+            <ul class="carts" ref="carts">
               <p class>All items {{getMyQty}}</p>
 
               <li v-for="item in getmylocalStorageCard" :key="item.id">
                 <div class="mycartitems">
                   <div class="cardimgimg" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
                   <p class>{{' name : ' + item.name}}</p>
-                  <p class>{{ "price :"+item.price + ' $ '}}</p>
+                  <p class>{{ "price :"+item.price + ' EGP '}}</p>
                   {{"quantity : "+item.quantity}}
                 </div>
               </li>
               <hr />
-              <p class="TotalPrice">{{ ' Total Price : ' + getMyTotalPrice+ " $ " }}</p>
+              <p class="TotalPrice">{{ ' Total Price ' + getMyTotalPrice+ " EGP " }}</p>
               <div class="mybtn">
-                <nuxt-link to="/payment">
+                <nuxt-link to="/payment" v-if="this.userstatus">
                   <v-btn small color="primary">Checkout</v-btn>
                 </nuxt-link>
                 <nuxt-link to="/cart">
@@ -87,6 +90,9 @@
             <nuxt-link to="/tShirt">tShirt</nuxt-link>
           </li>
           <li @click="togelPhoneNave()">
+            <nuxt-link to="/Shirt">Shirt</nuxt-link>
+          </li>
+          <li @click="togelPhoneNave()">
             <nuxt-link to="/jacket">jacket</nuxt-link>
           </li>
           <li @click="togelPhoneNave()">
@@ -104,7 +110,7 @@
 
           <nuxt-link to="/cart" class="cartQtyiconphone">
             <v-icon>mdi-cart</v-icon>
-            <span v-if="getMyQty != null && getMyQty != 0   " class="cartQty">{{getMyQty}}</span>
+            <span v-if="getMyQty != 0 && getMyQty != null" class="cartQty">{{getMyQty}}</span>
           </nuxt-link>
         </ul>
       </div>
@@ -121,9 +127,12 @@ export default {
       searchVale: "",
       prodactSearch: [],
       localStorage: {},
-      userLog: localStorage.getItem("status"),
-      userName: localStorage.getItem("userfirstName")
+      // userLog: localStorage.getItem("status"),
+      userstatus: localStorage.getItem("status")
     };
+  },
+  created() {
+    console.log(this.$store.state.products.mylocalStorageQty);
   },
   computed: {
     getMyQty() {
@@ -137,14 +146,14 @@ export default {
     }
   },
   methods: {
-    loggedin() {
-      if (localStorage.getItem("status") != null) {
-        console.log(this.$refs["loginbtn"]);
-        this.$router.replace("/");
-      } else {
-        this.$router.replace("/signIn");
-      }
-    },
+    // loggedin() {
+    //   if (localStorage.getItem("status") != null) {
+    //     console.log(this.$refs["loginbtn"]);
+    //     this.$router.replace("/");
+    //   } else {
+    //     this.$router.replace("/signIn");
+    //   }
+    // },
     togelPhoneNave() {
       this.$refs["phoneNav"].classList.toggle("change");
       this.$refs["changenavBody"].classList.toggle("changenavBody");
@@ -166,13 +175,11 @@ export default {
 };
 </script>
 <style scoped>
+a {
+  text-decoration: none;
+}
 .navDiskTop {
-  /* display: flex;
-
-  justify-content: flex-end;
-  justify-items: flex-end; */
-
-  /* border: 1px solid red; */
+  /* z-index: 99999; */
 }
 .navDiskTop li {
   /* padding: 0 100px; */
@@ -180,13 +187,17 @@ export default {
 }
 .TotalPrice {
   /* color: #00cec9; */
-  font-size: 35px;
+  font-size: 20px;
 }
 .mycartitems {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 10px 0;
+
   /* background: #4051b5;
   color: #f5f5f5; */
+}
+.mycartitems p {
+  font-size: 15px;
 }
 ul {
   padding-left: 0;
@@ -396,7 +407,19 @@ li a {
     display: none;
   }
   .changenavBody {
-    height: 85vh;
+    height: 100vh;
+  }
+}
+/* taplet */
+@media screen and (min-width: 769px) and (max-width: 1215px) {
+  .navPhone {
+    display: block;
+  }
+  .navDiskTop {
+    display: none;
+  }
+  .changenavBody {
+    height: 100vh;
   }
 }
 </style>

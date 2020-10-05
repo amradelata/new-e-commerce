@@ -48,7 +48,7 @@ export default {
   display: flex;
   width: calc(33.333% - 20px);
   margin: 9px;
-  border: 1px solid #00b894;
+  border: 1px solid #95afc0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 .mylink {
@@ -63,9 +63,19 @@ export default {
 .img {
   height: 200px;
   width: 200px;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
   margin-right: 35px;
+}
+/* taplet */
+@media screen and (min-width: 769px) and (max-width: 1215px) {
+  /* shop */
+  .shopitems {
+    width: 100%;
+  }
+  .shop {
+    width: calc(100% - 20px);
+  }
 }
 @media screen and (max-width: 768px) {
   /* shop */

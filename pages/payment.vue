@@ -12,9 +12,9 @@
           </li>
         </ul>
         <h5>Shipping</h5>
-        <h4>10 $</h4>
+        <h4>10 EGP</h4>
         <h5 class="total">Total</h5>
-        <h1>{{this.pricewithshipping}} $</h1>
+        <h1>{{this.pricewithshipping}} EGP</h1>
       </div>
 
       <div id="payment" class="payment">
@@ -354,10 +354,11 @@
               v-model="cvcNumber"
             />
           </p>
-
-          <button class="button-cta" title="Confirm your purchase" @click="lastStep(), Confirm()">
+          <!-- <nuxt-link to="/thankYou"> -->
+          <button class="button-cta" title="Confirm your purchase" @click=" Confirm()">
             <span>PURCHASE</span>
           </button>
+          <!-- </nuxt-link> -->
         </div>
       </div>
 
@@ -738,10 +739,11 @@
               v-model="cvcNumber"
             />
           </p>
-
-          <button class="button-cta" title="Confirm your purchase" @click="lastStep(), Confirm()">
+          <!-- <nuxt-link to="/thankYou"> -->
+          <button class="button-cta" title="Confirm your purchase" @click=" Confirm()">
             <span>PURCHASE</span>
           </button>
+          <!-- </nuxt-link> -->
         </div>
       </div>
     </div>
@@ -766,38 +768,44 @@ export default {
       userCardnumber: "",
       cvcNumber: "",
       ExpirationNmper: "",
-      pricewithshipping: ""
+      pricewithshipping: "",
+      userName: "",
+      userEmail: ""
     };
   },
   mounted() {
     //when i refresh  git my cart data from localStorage
+    this.userName = localStorage.getItem("userfirstName");
+    this.userEmail = localStorage.getItem("useremail");
     this.mylocalStorageCard = JSON.parse(localStorage.getItem("cart"));
     this.mylocalStorageTolalPrice = localStorage.getItem("totalprice");
     this.mylocalStorageQty = localStorage.getItem("qty");
     this.pricewithshipping = +this.mylocalStorageTolalPrice + +10;
   },
   methods: {
-    lastStep() {
-      localStorage.setItem("userCardnumber", this.userCardnumber);
-      localStorage.setItem("cvcNumber", this.cvcNumber);
-      localStorage.setItem("ExpirationNmper", this.ExpirationNmper);
-      // localStorage.getItem("cart");
-      // localStorage.removeItem('cart')   we need to clear the localSttorge after the user cnfarm  hes buy
-      this.$router.replace("/thankYou");
-    },
     async Confirm() {
+      if (
+        (this.userCardnumber === "",
+        this.cvcNumber === "",
+        this.ExpirationNmper === "")
+      ) {
+        return;
+      }
+      this.$router.replace("/thankYou");
+      // post user cart and information
       const orderAPI =
         "https://pharmacy-databeas.herokuapp.com/User-purchases-cart";
-      const userorder = [];
-      userorder.push(
-        this.mylocalStorageCard,
-        this.pricewithshipping,
-        this.mylocalStorageQty,
-        this.ExpirationNmper,
-        this.cvcNumber,
-        this.userCardnumber
-      );
-      // console.log(userorder)
+
+      const userorder = {
+        cart: this.mylocalStorageCard,
+        allprice: this.pricewithshipping,
+        allqty: this.mylocalStorageQty,
+        exp: this.ExpirationNmper,
+        cvc: this.cvcNumber,
+        cardnumper: this.userCardnumber,
+        username: this.userName,
+        useremail: this.userEmail
+      };
       const res = await axios.post(orderAPI, userorder);
       // rest my cart
       let mystringCart = JSON.stringify(this.restCart); //convert  my array of opject to string to save it on localStorage
@@ -807,6 +815,7 @@ export default {
       localStorage.setItem("ExpirationNmper", 0);
       localStorage.setItem("cvcNumber", 0);
       localStorage.setItem("userCardnumber", 0);
+
       this.$router.go();
     }
   }
@@ -819,7 +828,6 @@ export default {
 *::after {
   box-sizing: border-box;
 }
-
 body,
 html {
   height: 100%;
@@ -828,7 +836,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 body {
   background: rgba(37, 44, 65, 1);
   background: -moz-linear-gradient(
@@ -880,7 +887,6 @@ body {
       GradientType=0
     );
 }
-
 .subject {
   font-family: "Playfair Display", serif;
   color: rgba(255, 255, 255, 0.02);
@@ -890,7 +896,6 @@ body {
   line-height: 0.9;
   z-index: -1;
 }
-
 /*--------------------
 Text
 ---------------------*/
@@ -903,13 +908,11 @@ h6 {
   margin: 0;
   line-height: 1.4;
 }
-
 h1 {
   font-size: 42px;
   color: #6d819c;
   text-align: left;
 }
-
 h2 {
   font-size: 28px;
   letter-spacing: -2px;
@@ -917,14 +920,12 @@ h2 {
   text-align: center;
   line-height: 2.8;
 }
-
 h3 {
   font-size: 16px;
   color: #dddfe6;
   letter-spacing: 1px;
   text-align: left;
 }
-
 h4 {
   font-size: 16px;
   color: #7495aa;
@@ -932,7 +933,6 @@ h4 {
   text-align: left;
   line-height: 2;
 }
-
 h5 {
   font-size: 11px;
   font-weight: 700;
@@ -941,15 +941,12 @@ h5 {
   text-align: left;
   text-transform: uppercase;
 }
-
 h5 > span {
   margin-left: 87px;
 }
-
 h5.total {
   margin-top: 20px;
 }
-
 h6 {
   font-family: "PT Mono";
   font-size: 18px;
@@ -960,15 +957,12 @@ h6 {
   text-transform: uppercase;
   line-height: 1.8;
 }
-
 h6 > span {
   margin-left: 64px;
 }
-
 /*--------------------
 Checkout
 ---------------------*/
-
 .checkout {
   width: 670px;
   height: 485px;
@@ -977,19 +971,15 @@ Checkout
   left: 50%;
   /* background-color: #dddfe6; */
   overflow: hidden;
-
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;
-
   -webkit-box-shadow: 0 30px 48px rgba(37, 44, 65, 0.32);
   -moz-box-shadow: 0 30px 48px rgba(37, 44, 65, 0.32);
   box-shadow: 0 30px 48px rgba(37, 44, 65, 0.32);
 }
-
 .order {
   width: 300px;
   height: 485px;
@@ -997,12 +987,10 @@ Checkout
   float: left;
   background-color: #f4f5f9;
   z-index: 1;
-
   -webkit-box-shadow: 0 15px 24px rgba(37, 44, 65, 0.16);
   -moz-box-shadow: 0 15px 24px rgba(37, 44, 65, 0.16);
   box-shadow: 0 15px 24px rgba(37, 44, 65, 0.16);
 }
-
 ul.order-list {
   width: 100%;
   height: 205px;
@@ -1011,58 +999,48 @@ ul.order-list {
   padding-right: 12px;
   margin-top: 50px;
 }
-
 ul.order-list li {
   height: 60px;
   margin-bottom: 10px;
   overflow: hidden;
   border-bottom: 1px solid #e9ebf2;
 }
-
 /* ul.order-list li > img {
   width: 60px;
   height: 60px;
   float: left;
 } */
-
 ul.order-list li > h4 {
   margin-top: 16px;
   line-height: 1;
   letter-spacing: 1px;
   text-align: right;
-
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-
 ul.order-list li:hover > h4 {
   margin-top: 8px;
 }
-
 ul.order-list li > h5 {
   margin-top: 0px;
   text-align: right;
   display: none;
-
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-
 ul.order-list li:hover > h5 {
   margin-top: 3px;
   display: block;
 }
-
 /*--------------------
 Payment
 ---------------------*/
-
 .payment {
   z-index: 0;
   width: 370px;
@@ -1070,7 +1048,6 @@ Payment
   float: right;
   /* margin-top: 25px; */
 }
-
 .card {
   width: 300px;
   height: 178px;
@@ -1079,16 +1056,13 @@ Payment
   background-color: #f1404b;
   overflow: hidden;
   z-index: 1;
-
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
-
   -webkit-box-shadow: 0 15px 24px rgba(37, 44, 65, 0.32);
   -moz-box-shadow: 0 15px 24px rgba(37, 44, 65, 0.32);
   box-shadow: 0 15px 24px rgba(37, 44, 65, 0.32);
 }
-
 .card-content {
   width: 100%;
   padding: 20px;
@@ -1096,20 +1070,17 @@ Payment
   float: left;
   z-index: 1;
 }
-
 #logo-visa {
   position: relative;
   margin-top: -20px;
   left: 190px;
 }
-
 .card-form {
   width: 100%;
   position: relative;
   float: right;
   padding: 15px 35px;
 }
-
 .card-form > p.field {
   height: 48px;
   padding: 2px 10px;
@@ -1117,12 +1088,10 @@ Payment
   background-color: #f4f5f9;
   border: 1px solid #d2d4de;
   display: inline-block;
-
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
-
 input[type="text"] {
   height: 32px;
   position: relative;
@@ -1135,11 +1104,9 @@ input[type="text"] {
   font-weight: 400;
   z-index: 0;
 }
-
 input[type="text"]:focus {
   outline: none;
 }
-
 ::-webkit-input-placeholder {
   color: #dddfe6;
 }
@@ -1152,7 +1119,6 @@ input[type="text"]:focus {
 :-ms-input-placeholder {
   color: #dddfe6;
 }
-
 #i-cardfront,
 #i-cardback,
 #i-calendar {
@@ -1160,27 +1126,21 @@ input[type="text"]:focus {
   top: 8px;
   z-index: 1;
 }
-
 #cardnumber {
   width: 244px;
 }
-
 #cardexpiration {
   width: 114px;
 }
-
 #cardcvc {
   width: 60px;
 }
-
 .space {
   margin-right: 10px;
 }
-
 button:focus {
   outline: 0;
 }
-
 .button-cta {
   width: 100%;
   height: 65px;
@@ -1196,30 +1156,25 @@ button:focus {
   font-size: 24px;
   color: #f4f5f9;
   z-index: -1;
-
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-
 .button-cta:hover {
   background: rgba(193, 14, 26, 1);
   border: 1px solid rgba(193, 14, 26, 1);
 }
-
 .button-cta span {
   display: inline-block;
   position: relative;
-
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-
 .button-cta span:after {
   content: "→";
   color: #f4f5f9;
@@ -1228,20 +1183,16 @@ button:focus {
   top: 0;
   right: -40px;
 }
-
 .button-cta:hover span {
   padding-right: 45px;
 }
-
 .button-cta:hover span:after {
   opacity: 1;
   right: 0;
 }
-
 /*--------------------
 Credit Card Background
 ---------------------*/
-
 .wave {
   height: 300px;
   width: 300px;
@@ -1249,7 +1200,6 @@ Credit Card Background
   background: #780910;
   z-index: -1;
 }
-
 .wave:before,
 .wave:after {
   content: "";
@@ -1292,12 +1242,10 @@ Credit Card Background
       endColorstr="#f1404c",
       GradientType=0
     );
-
   -webkit-border-radius: 50% 50%;
   -moz-border-radius: 50% 50%;
   border-radius: 50% 50%;
 }
-
 .wave:after {
   height: 300px;
   width: 300px;
@@ -1305,18 +1253,15 @@ Credit Card Background
   top: 20%;
   opacity: 0.8;
 }
-
 .wave:before {
   height: 360px;
   width: 360px;
   left: -5%;
   top: -70%;
 }
-
 /*--------------------
 Payment Notification
 ---------------------*/
-
 .paid {
   z-index: 0;
   width: 370px;
@@ -1326,17 +1271,14 @@ Payment Notification
   text-align: center;
   display: none;
 }
-
 .paid > h2 {
   line-height: 1;
   margin-top: 10px;
   color: #3ac569;
 }
-
 /*--------------------
 Credits
 ---------------------*/
-
 .icon-credits {
   width: 100%;
   position: absolute;
@@ -1347,7 +1289,6 @@ Credits
   text-align: center;
   z-index: -1;
 }
-
 .icon-credits a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.12);
@@ -1391,14 +1332,12 @@ Credits
   }
   .orderPhone {
     display: block;
-
     padding: 0 35px;
     /* width: 100% !important; */
   }
   /* .orderPhone .checkout {
     
   } */
-
   .orderPhone h1,
   .orderPhone h2,
   .orderPhone h3,
@@ -1409,7 +1348,6 @@ Credits
   .order {
     display: none;
   }
-
   .checkout {
     width: 100%;
     margin-top: 100vh;
@@ -1423,6 +1361,5 @@ Credits
     width: 220px;
   }
 }
-
 /* taplet */
 </style>

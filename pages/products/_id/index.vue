@@ -8,7 +8,7 @@
         <div class="singlecontent">
           <h1>{{single.name}}</h1>
           <p>{{single.description}}</p>
-          <span class="price">{{single.price + ' $'}}</span>
+          <span class="price">{{single.price + ' EGP'}}</span>
           <nuxt-link :to="'/cart'">
             <v-btn class="btn" @click="addToCart(i = single.id)">addto cart</v-btn>
           </nuxt-link>
@@ -84,6 +84,7 @@ a {
   width: 700px;
   margin-top: 50px;
   background-size: contain;
+  margin-right: 100px;
 }
 
 @media screen and (max-width: 768px) {
@@ -93,8 +94,11 @@ a {
   }
   .singlimg {
     width: 100%;
-    margin-top: 0;
-    margin-bottom: 35px;
+    margin: auto;
+    text-align: center;
+    background-size: contain;
+    height: 350px;
+    background-position: center center;
   }
   .halfdev h1 {
     padding-top: 0;

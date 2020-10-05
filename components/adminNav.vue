@@ -38,7 +38,7 @@ export default {};
   position: fixed;
   right: 0;
   left: 0;
-  top: 100px;
+  /* top: 100px; */
   z-index: 9999;
 }
 .productNav li {

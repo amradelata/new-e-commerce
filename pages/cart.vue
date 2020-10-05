@@ -1,8 +1,8 @@
 <template>
   <div class="cartpage">
-    <div class="asd">
-      <!-- <h2 class>all item/s {{getMyQty}}</h2> -->
+    <div class="asd" v-if="getMyQty != 0 && getMyQty != null">
       <h2 class="head">Shopping Cart</h2>
+      <h4 class>all item/s {{getMyQty}}</h4>
       <hr />
       <div class="supheds">
         <h4>Product Details</h4>
@@ -18,38 +18,38 @@
           <p class="quantity">{{"quantity : "+item.quantity}}</p>
           <div class="cartbuttons">
             <!-- <v-btn @click="mydelete(index)">delete</v-btn> -->
-            <v-btn @click="mydelete(index)" class="ma-2" tile outlined color="error">
+            <v-btn @click="mydelete(index)" tile outlined color="error">
               <v-icon left>mdi-delete</v-icon>delete
             </v-btn>
-            <v-btn @click="removefromquantty(index)" class="ma-2" tile outlined color="warning">
+            <v-btn @click="removefromquantty(index)" tile outlined color="warning">
               <v-icon left>mdi-pencil</v-icon>-
             </v-btn>
             <!-- <v-btn v-if="item.quantity" @click="removefromquantty(index)">-</v-btn> -->
             <!-- <v-btn @click="addtoquantty(index)">+</v-btn> -->
-            <v-btn @click="addtoquantty(index)" class="ma-2" tile outlined color="warning">
+            <v-btn @click="addtoquantty(index)" tile outlined color="warning">
               <v-icon left>mdi-pencil</v-icon>+
             </v-btn>
           </div>
         </div>
         <div class="cart">
-          <p class="price">{{"price : "+item.price}}$</p>
+          <p class="price">{{"price : "+item.price}} EGP</p>
         </div>
       </div>
       <div class="totalprice">
-        <p>{{ ' total price : ' + getMyTotalPrice }}$</p>
+        <p>{{ ' total price : ' + getMyTotalPrice }} EGP</p>
         <!-- <v-btn v-if="getMyQty != 0 " @click="goTooPayment()">Proceed to checkout</v-btn> -->
-        <v-btn
-          class="ma-2"
-          tile
-          outlined
-          color="success"
-          v-if="getMyQty != 0 "
-          @click="goTooPayment()"
-        >
+        <v-btn class="ma-2" tile outlined color="success" @click="goTooPayment()">
           Proceed to checkout
           <v-icon right>mdi-arrow-right</v-icon>
         </v-btn>
       </div>
+    </div>
+    <div class="emty" v-else>
+      <img src="~/assets/img/svg/9--Night calls.svg" />
+      <h1>Nothing Here!!!</h1>
+      <nuxt-link to="/products">
+        <button>Back to shop</button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -103,6 +103,16 @@ export default {
 };
 </script>
 <style scoped>
+.emty {
+  text-align: center;
+}
+.emty h1 {
+  color: #6c63ff;
+}
+.emty img {
+  width: 90vw;
+  height: 75vh;
+}
 .cartpage {
   padding: 0 50px;
   background: #f5f6fa;
@@ -136,22 +146,28 @@ export default {
 .head {
   padding: 35px 0;
 }
+.cartbuttons button {
+  padding: 20px;
+}
 
 .cardimgimg {
   margin: auto;
   height: 200px;
   width: 150px;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
 }
 .totalprice {
   padding: 35px 0;
 }
 .totalprice p {
-  font-size: 30px;
+  font-size: 25px;
   color: #2d3436;
 }
 @media screen and (max-width: 500px) {
+  .cart button {
+    padding: 0 14px;
+  }
   .supheds {
     display: none;
   }

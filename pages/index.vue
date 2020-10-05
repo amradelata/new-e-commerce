@@ -6,8 +6,9 @@
         <div class="mycontent">
           <h1>First Shop Online</h1>
           <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas minus amet assumenda fuga vero nam.</p>
-          <button>Get Started</button>
-          <button>Sign in</button>
+          <nuxt-link to="/products">
+            <button>SHOP</button>
+          </nuxt-link>
         </div>
       </div>
       <div class="herosections">
@@ -17,25 +18,27 @@
     <!-- hero -->
     <!-- whatweoferr -->
     <section>
-      <!-- <h1 class="mytitle">What We Oferr</h1> -->
+      <h1 class="phone mytitle">What We Oferr</h1>
       <div class="whatweoferr">
+        <h1 class="desck mytitle">What We Oferr</h1>
         <div class="myoferr">
           <img src="~/assets/img/svg/cut.png" />
-          <p>Lorem ipsum dolor sit amet consectetur .</p>
+          <p>Lorem ipsum .</p>
         </div>
         <div class="myoferr">
           <img src="~/assets/img/svg/short.png" />
-          <p>Lorem ipsum dolor sit amet consectetur .</p>
+          <p>Lorem ipsum .</p>
         </div>
         <div class="myoferr">
           <img src="~/assets/img/svg/t-shirt.png" />
-          <p>Lorem ipsum dolor sit amet consectetur .</p>
+          <p>Lorem ipsum .</p>
         </div>
       </div>
     </section>
     <!-- whatweoferr -->
     <!-- our team -->
     <section>
+      <h1 class="mytitle">our team</h1>
       <div class="ourteam">
         <div class="teammate">
           <img src="~/assets/img/svg/user.png" />
@@ -108,15 +111,15 @@ export default {};
   width: 50vw;
 }
 .herosections .mycontent h1 {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: lighter;
 }
 .herosections .mycontent p {
-  font-size: 30px;
+  font-size: 20px;
 }
 .herosections .mycontent button {
   margin-top: 35px;
-  padding: 10px 30px;
+  padding: 10px 60px;
   cursor: pointer;
   border: none;
   background: #00b894;
@@ -131,9 +134,9 @@ export default {};
 .whatweoferr {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
-  height: 100vh;
-  padding: 0 100px;
+  justify-content: space-around;
+  /* height: 100vh; */
+  padding: 100px 0;
   align-items: center;
 }
 
@@ -158,8 +161,8 @@ export default {};
   /* width: 33%; */
   justify-items: center;
   justify-content: space-around;
-  padding: 0 100px;
-  height: 100vh;
+  padding: 100px 0;
+  /* height: 100vh; */
   align-items: center;
 }
 .teammate {
@@ -196,10 +199,12 @@ export default {};
 
 .inputs input {
   margin: 20px 0;
+  color: #000;
 }
 .inputs textarea {
   height: 150px;
   margin-bottom: 10px;
+  color: #000;
 }
 .inputs button {
   padding: 10px;
@@ -214,32 +219,51 @@ export default {};
   padding: 5px;
   border-radius: 5px;
 }
+.desck {
+  display: none;
+}
+.phone {
+  display: block;
+}
 @media screen and (max-width: 768px) {
+  .desck {
+    display: block;
+  }
+  .phone {
+    display: none;
+  }
   .myhero,
-  .whatweoferr,
+  .whatweoferr {
+    text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    /* height: 100vh; */
+    padding: 0 20px;
+    /* margin-bottom: 500px; */
+    /* display: inline-block;
+    width: 100%; */
+  }
+  .herosections img {
+    width: 100vw;
+    margin-top: 50px;
+  }
+  .whatweoferr {
+    margin: 350px 0 0 0;
+  }
   .ourteam {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-    height: 100vh;
-    padding: 35px;
-  }
-
-  .mycontent {
-    text-align: center;
   }
 
   .ourlocation {
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 125%;
   }
   .location iframe,
   .location {
     width: 100vw;
-  }
-  .ourteam {
-    margin-top: 100%;
   }
 
   .mynav ul,
@@ -252,10 +276,6 @@ export default {};
   .myfooter li {
     margin-right: 0;
     margin: 10px 0;
-  }
-
-  .myfooter ul {
-    /* display: none; */
   }
 }
 </style>

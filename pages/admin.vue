@@ -202,6 +202,9 @@ export default {
 
 
 <style scoped>
+h3 {
+  margin-bottom: 20px;
+}
 .link,
 .danger,
 .success {
@@ -234,6 +237,7 @@ export default {
 }
 .img {
   width: 100%;
+  height: 100px;
   background-size: contain;
   background-position: center center;
 }
@@ -246,6 +250,9 @@ export default {
 @media screen and (max-width: 768px) {
   .adminCard {
     flex-basis: calc(100% - 20px);
+  }
+  #admin {
+    text-align: center;
   }
 }
 </style>

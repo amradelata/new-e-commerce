@@ -1,28 +1,19 @@
 <template>
-  <div class="top">
+  <div>
+    <productsNave />
     <h3 class="found">{{this.prodactSearch.length+' - products found '}}</h3>
-    <v-row no-gutters>
-      <v-col v-for="product in prodactSearch" :key="product.id" cols="12" sm="4">
-        <v-card class="ma-2 myCard" outlined tile>
-          <nuxt-link :to="'products/' + product.id">
-            <div class="img" :style="{ backgroundImage: 'url(' + product.img_url + ')' }"></div>
+    <div class="shopitems">
+      <div class="shop" v-for="item in prodactSearch" :key="item.id">
+        <nuxt-link :to="'/products/' + item.id" class="mylink">
+          <div class="img" :style="{backgroundImage: 'url('+item.img_url+')'}"></div>
+          <div class="shopcontent">
+            <h3>{{item.name}}</h3>
 
-            <v-card-title>{{product.name}}</v-card-title>
-            <v-card-text>
-              <div
-                class="my-4 subtitle-1 black--text"
-              >{{product.price + ' $'}} {{product. category}}</div>
-            </v-card-text>
-
-            <v-divider class="mx-4"></v-divider>
-
-            <v-card-actions>
-              <v-btn text>Shoew More</v-btn>
-            </v-card-actions>
-          </nuxt-link>
-        </v-card>
-      </v-col>
-    </v-row>
+            <p>{{item.price}}EGP</p>
+          </div>
+        </nuxt-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,7 +21,9 @@
 <script>
 import axios from "axios";
 const API = "https://vue-e-commerce-databse.herokuapp.com/products";
+import productsNave from "~/components/productsNave.vue";
 export default {
+  components: { productsNave },
   props: [],
   data() {
     return {
@@ -68,31 +61,52 @@ export default {
 };
 </script>
 
+
 <style scoped>
-a {
-  display: block;
-  color: black;
-  text-decoration: none;
-}
-.paragraph {
-  color: rgba(0, 0, 0, 0.54);
-}
-.myCard {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  margin: 10px !important;
-  border-radius: 4px;
-  padding: 0;
-  overflow: hidden;
-  margin: auto;
-  margin-bottom: 20px;
-}
-.img {
-  height: 250px;
-  width: 100%;
-  background-size: contain;
-  background-position: center center;
-}
+/* shop */
 .found {
   text-align: center;
 }
+
+.shopitems {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  width: 80%;
+}
+.shop {
+  display: flex;
+  width: calc(33.333% - 20px);
+  margin: 9px;
+  border: 1px solid #00b894;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.mylink {
+  display: flex;
+  color: black;
+  text-decoration: none;
+}
+.shopcontent {
+  margin-top: 100px;
+}
+
+.img {
+  height: 200px;
+  width: 200px;
+  background-size: contain;
+  background-position: center center;
+  margin-right: 35px;
+}
+@media screen and (max-width: 768px) {
+  /* shop */
+  .shopitems {
+    width: 100%;
+  }
+  .shop {
+    width: calc(100% - 20px);
+  }
+}
 </style>
+
+
+
