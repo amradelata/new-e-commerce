@@ -1,12 +1,14 @@
 <template>
   <div class="top container">
-    <nuxt-link to="/signIn">sign in</nuxt-link>
-    <nuxt-link to="/logIn">log in</nuxt-link>
+    <nuxt-link to="/signIn">sign up</nuxt-link>
+
+    <nuxt-link to="/logIn">login</nuxt-link>
     <v-card-text>
       <v-form class="px-3" ref="form">
         <v-text-field v-model="firstName" label="first name" :rules="nameRules"></v-text-field>
+        <v-text-field v-model="email" label="email" :rules="nameRules"></v-text-field>
         <v-text-field v-model="password" label="password" :rules="nameRules"></v-text-field>
-        <v-btn @click="submit()">SIGN IN</v-btn>
+        <v-btn @click="submit()">GO</v-btn>
       </v-form>
     </v-card-text>
   </div>
@@ -23,7 +25,7 @@ export default {
       ],
       password: "",
       firstName: "",
-      email: this.email
+      email: ""
     };
   },
   methods: {
@@ -33,15 +35,29 @@ export default {
       );
 
       const passwordres = await axios.get(
-        `https://vue-e-commerce-databse.herokuapp.com/users/?firstName=${this.password}`
+        `https://vue-e-commerce-databse.herokuapp.com/users/?password=${this.password}`
       );
+      const emailres = await axios.get(
+        `https://vue-e-commerce-databse.herokuapp.com/users/?email=${this.email}`
+      );
+      console.log(nameres.data, passwordres, emailres);
 
-      if (nameres.data.length > 0 && passwordres.data.length > 0) {
-        this.$router.replace("/payment");
-      } else if (nameres.data.length === 0 && passwordres.data.length === 0) {
-        alert("The password or username is wrong");
-      } else {
+      if ((this.firstName === "", this.email === "", this.password === "")) {
         return;
+      } else if (
+        nameres.data.length > 0 &&
+        passwordres.data.length > 0 &&
+        emailres.data.length > 0
+      ) {
+        this.$router.replace("/payment");
+      } else if (
+        nameres.data.length === 0 ||
+        emailres.data.length === 0 ||
+        passwordres.data.length === 0
+      ) {
+        alert("The password or username or email is wrong");
+      } else {
+        // return
       }
 
       localStorage.setItem("status", "loggedIn");
@@ -52,3 +68,11 @@ export default {
   }
 };
 </script>
+<style  scoped>
+.v-application a {
+  color: #000;
+  text-decoration: none;
+  background: #cccccc7d;
+  padding: 10px;
+}
+</style>

@@ -1,14 +1,16 @@
 <template>
   <div class="top container">
-    <nuxt-link to="/signIn">sign in</nuxt-link>
-    <nuxt-link to="/logIn">log in</nuxt-link>
+    <nuxt-link to="/signIn">sign up</nuxt-link>
+
+    <nuxt-link to="/logIn">login</nuxt-link>
+
     <v-card-text>
       <v-form class="px-3" ref="form">
         <v-text-field v-model="firstName" label="first name" :rules="nameRules"></v-text-field>
         <v-text-field v-model="lastName" label="last name" :rules="nameRules"></v-text-field>
         <v-text-field v-model="email" label="email" :rules="emailRules"></v-text-field>
         <v-text-field v-model="password" label="password" :rules="nameRules"></v-text-field>
-        <v-btn @click="submit()">SIGN IN</v-btn>
+        <v-btn @click="submit()">GO</v-btn>
       </v-form>
     </v-card-text>
   </div>
@@ -60,7 +62,7 @@ export default {
       ) {
         return;
       } else if (nameres.data.length > 0) {
-        alert("This name already exists");
+        alert("this _username_ taken");
         return;
       }
       this.$router.replace("/payment");
@@ -69,5 +71,11 @@ export default {
 };
 </script>
 
-<style>
+<style  scoped>
+.v-application a {
+  color: #000;
+  text-decoration: none;
+  background: #cccccc7d;
+  padding: 10px;
+}
 </style>

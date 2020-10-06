@@ -35,7 +35,7 @@ export default {};
 .productNav {
   list-style-type: none;
   text-align: center;
-  position: fixed;
+  /* position: fixed; */
   right: 0;
   left: 0;
   /* top: 100px; */
